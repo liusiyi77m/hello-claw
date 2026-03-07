@@ -104,7 +104,7 @@ OpenClaw 会创建一个独立会话的定时任务，每天准时执行。
 
 ---
 
-**下一步**：[第四章 Skills 技能系统](/cn/adopt/chapter4)
+**下一步**：[第四章 Skills 技能系统](/cn/adopt/chapter4/)
 
 Sources:
 - [OpenClaw Documentation](https://openclaw.ai)
@@ -411,5 +411,5 @@ jobs:
 
 ---
 
-**下一步**：[第四章 Skills 技能系统](/cn/adopt/chapter4)
+**下一步**：[第四章 Skills 技能系统](/cn/adopt/chapter4/)
 

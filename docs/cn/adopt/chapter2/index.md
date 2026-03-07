@@ -549,4 +549,4 @@ openclaw gateway restart
 
 ---
 
-**下一步**：[第三章 自动化任务入门](/cn/adopt/chapter3)
+**下一步**：[第三章 自动化任务入门](/cn/adopt/chapter3/)
