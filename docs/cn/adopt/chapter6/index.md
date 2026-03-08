@@ -270,11 +270,11 @@ sudo ufw enable
 ### 5.4 日志审计
 
 ```bash
-# 查看 OpenClaw 操作日志
-openclaw logs --last 100
+# 查看 OpenClaw 最近日志
+openclaw logs --limit 100
 
-# 监控异常操作
-openclaw logs --level error --last 50
+# 实时监控日志
+openclaw logs --follow
 ```
 
 </details>
