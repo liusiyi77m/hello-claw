@@ -4,6 +4,8 @@
 
 ## 1. Google Workspace 集成
 
+> **网络提示**：Google 服务在中国大陆无法直接访问，需要网络代理。如果你没有代理，可以跳过本节，直接看第 2 节 Notion 集成或第 3 节飞书深度集成。
+
 Google Workspace（gog）技能提供了 Gmail、Calendar、Drive、Docs、Sheets 的统一访问接口，是最常用的外部服务集成之一。
 
 ### 1.1 安装与配置
@@ -14,7 +16,7 @@ Google Workspace（gog）技能提供了 Gmail、Calendar、Drive、Docs、Sheet
 clawhub install gog
 ```
 
-安装后需要完成 Google OAuth 授权：
+安装后需要完成 Google OAuth 授权（OAuth 是一种安全的授权方式，让 OpenClaw 可以代你访问 Google 服务，而不需要你提供 Google 密码）：
 
 1. OpenClaw 会生成一个授权链接
 2. 在浏览器中打开链接，登录 Google 账号

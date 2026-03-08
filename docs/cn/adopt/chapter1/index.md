@@ -7,7 +7,7 @@
 - **操作系统**：macOS、Linux、或 Windows（推荐 WSL2）
 - **Node.js**：22 或更高版本
 - **内存**：至少 1GB，推荐 4GB
-- **端口**：18789 需要可用
+- **端口**：18789 需要可用（端口就像电脑上的"门牌号"，程序通过它通信。一般不需要额外操作，除非你安装了其他占用该端口的软件）
 
 <details>
 <summary>Windows 用户：什么是 WSL2？如何安装？</summary>
@@ -33,13 +33,7 @@ wsl --install
 
 </details>
 
-检查 Node.js 版本：
-
-```bash
-node --version
-```
-
-如果版本低于 22，需要先升级 Node.js。
+> 如果你是全新安装，可以跳过版本检查，直接进入下一步安装 Node.js。如果你之前安装过 Node.js，可以检查版本：`node --version`，版本低于 22 需要升级。
 
 > **什么是终端（Terminal）？**
 >
@@ -195,11 +189,11 @@ openclaw --version
 openclaw onboard --install-daemon
 ```
 
-这个命令会启动交互式配置向导，并安装后台守护进程。
+这个命令会启动交互式配置向导，并安装后台守护进程（守护进程就是在后台默默运行的程序，让 OpenClaw 在你不操作时也能保持在线）。
 
 ### 4.1 选择模型提供商
 
-向导首先会询问你使用哪个 AI 模型。
+向导首先会询问你使用哪个 AI 模型。OpenClaw 本身不包含 AI 大脑，它需要连接一个"模型提供商"的服务来获得智能。你需要在提供商那里注册账号，获取一个 **API Key**（类似于访问密码），OpenClaw 用它来调用 AI 服务。
 
 **国内用户强烈推荐硅基流动（SiliconFlow）**——新注册用户可获得 **16 元免费算力券**，足够完成本教程的全部练习，无需国际信用卡。
 
@@ -296,7 +290,7 @@ openclaw config set llm.default "deepseek-ai/DeepSeek-V3"
 openclaw status
 ```
 
-看到 `Gateway service: running` 说明安装成功。
+看到 `Gateway service: running` 说明安装成功。Gateway（网关）是 OpenClaw 的核心服务，负责接收你的指令、调用 AI 模型、执行任务。
 
 打开 Web 控制面板：
 
