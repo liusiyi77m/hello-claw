@@ -57,12 +57,13 @@ openclaw --version
 ### 3.2 配置 LLM API Key
 
 ```bash
-# 设置 API Key
-openclaw config set llm.provider "anthropic"
-openclaw config set llm.apiKey "sk-ant-xxxxx"
+# 设置 API Key（以硅基流动为例）
+openclaw config set llm.provider "siliconflow"
+openclaw config set llm.baseUrl "https://api.siliconflow.cn/v1"
+openclaw config set llm.apiKey "sk-xxxxx"
 
 # 或使用环境变量
-export ANTHROPIC_API_KEY="sk-ant-xxxxx"
+export LLM_API_KEY="sk-xxxxx"
 ```
 
 ### 3.3 使用 systemd 保持运行
@@ -128,7 +129,7 @@ docker run -d \
   --name openclaw \
   --restart always \
   -v ~/openclaw-data:/home/openclaw/.openclaw \
-  -e ANTHROPIC_API_KEY="sk-ant-xxxxx" \
+  -e LLM_API_KEY="sk-xxxxx" \
   -p 18789:18789 \
   ghcr.io/openclaw/openclaw:latest gateway start
 ```
@@ -153,7 +154,7 @@ services:
     ports:
       - "18789:18789"
     environment:
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - LLM_API_KEY=${LLM_API_KEY}
       - NODE_ENV=production
     command: gateway start
 ```
@@ -162,7 +163,7 @@ services:
 
 ```bash
 # 创建 .env 文件
-echo "ANTHROPIC_API_KEY=sk-ant-xxxxx" > .env
+echo "LLM_API_KEY=sk-xxxxx" > .env
 
 # 启动服务
 docker compose up -d
@@ -260,7 +261,7 @@ du -sh ~/openclaw-data/*
 
 **内存不足**：OpenClaw 运行时通常占用 500MB-1GB 内存。如果服务器内存紧张，考虑升级配置或使用 swap。
 
-**网络超时**：国内服务器访问 Anthropic API 可能需要代理。可以配置 HTTP_PROXY 环境变量。
+**网络超时**：如果使用海外 API 提供商，国内服务器可能需要代理。可以配置 HTTP_PROXY 环境变量。推荐使用硅基流动等国内提供商避免此问题。
 
 **Docker 容器自动重启**：检查 `docker logs openclaw` 查看崩溃原因，通常是 API Key 过期或配置文件格式错误。
 

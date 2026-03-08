@@ -10,16 +10,13 @@ OpenClaw 不绑定任何单一 LLM 提供商。你可以同时配置 Claude、GP
 |--------|------|------|---------|
 | **SiliconFlow** | `siliconflow/deepseek-ai/DeepSeek-V3` | **国内推荐**，新用户 16 元免费 | 通用编码、中文任务 |
 | SiliconFlow | `siliconflow/Qwen/Qwen2.5-72B-Instruct` | 中文能力突出 | 中文写作、翻译 |
-| Anthropic | `anthropic/claude-opus-4-6` | 最强推理，200K 上下文 | 复杂分析、架构设计 |
-| Anthropic | `anthropic/claude-sonnet-4-6` | 均衡性能 | 日常编码、文档生成 |
-| Anthropic | `anthropic/claude-haiku-4-5` | 速度快、成本低 | 简单查询、格式转换 |
-| OpenAI | `openai/gpt-5` | 强推理能力 | 数学、逻辑推理 |
-| OpenAI | `openai/gpt-4o` | 多模态支持 | 图片理解、语音处理 |
-| Google | `google/gemini-3-pro` | 1M 上下文 | 大文件分析 |
+| DeepSeek | `deepseek/deepseek-chat` | 编码能力强 | 代码生成、调试 |
+| Kimi | `moonshot/moonshot-v1-128k` | 128K 长上下文 | 长文档分析 |
+| MiniMax | `minimax/abab6.5s-chat` | 多模态支持 | 语音、图片处理 |
 
-> **模型标识格式**：OpenClaw 统一使用 `provider/model-name` 格式标识模型。目前支持 12+ 个官方提供商：Ollama、OpenAI、Anthropic、OpenRouter、SiliconFlow、Amazon Bedrock、Vercel AI Gateway、Moonshot AI、MiniMax、OpenCode Zen、GLM、Z.AI、Synthetic。
+> **模型标识格式**：OpenClaw 统一使用 `provider/model-name` 格式标识模型。目前支持 12+ 个官方提供商：Ollama、SiliconFlow、DeepSeek、Moonshot AI、MiniMax、OpenRouter、GLM、Z.AI 等。
 >
-> **国内用户推荐**：[硅基流动（SiliconFlow）](https://cloud.siliconflow.cn)提供 OpenAI 兼容 API，新注册用户赠送 16 元算力券，支持支付宝/微信充值。详见第一章 4.2 节。
+> **国内用户推荐**：[硅基流动（SiliconFlow）](https://cloud.siliconflow.cn)提供 OpenAI 兼容 API，新注册用户赠送 16 元算力券，支持支付宝/微信充值。详见第一章 4.2 节。通过硅基流动可直接访问 DeepSeek、Qwen、GLM 等多家模型，无需分别注册。
 
 ### 1.2 本地模型（Ollama）
 
@@ -35,11 +32,12 @@ OpenClaw 不绑定任何单一 LLM 提供商。你可以同时配置 Claude、GP
 ### 2.1 添加模型提供商
 
 ```bash
-# 配置 Anthropic（默认）
-openclaw config set llm.providers.anthropic.apiKey "sk-ant-xxxxx"
+# 配置硅基流动（国内推荐）
+openclaw config set llm.providers.siliconflow.baseUrl "https://api.siliconflow.cn/v1"
+openclaw config set llm.providers.siliconflow.apiKey "sk-xxxxx"
 
-# 添加 OpenAI
-openclaw config set llm.providers.openai.apiKey "sk-xxxxx"
+# 添加 DeepSeek
+openclaw config set llm.providers.deepseek.apiKey "sk-xxxxx"
 
 # 添加本地 Ollama
 openclaw config set llm.providers.ollama.baseUrl "http://localhost:11434"
@@ -49,10 +47,10 @@ openclaw config set llm.providers.ollama.baseUrl "http://localhost:11434"
 
 ```bash
 # 主模型：用于大多数任务
-openclaw config set llm.default "claude-sonnet-4-6"
+openclaw config set llm.default "siliconflow/deepseek-ai/DeepSeek-V3"
 
 # 回退模型：主模型不可用时使用
-openclaw config set llm.fallback "gpt-4o"
+openclaw config set llm.fallback "deepseek/deepseek-chat"
 ```
 
 ### 2.3 配置文件示例
@@ -62,16 +60,16 @@ openclaw config set llm.fallback "gpt-4o"
 {
   "llm": {
     "default": "siliconflow/deepseek-ai/DeepSeek-V3",
-    "fallback": "anthropic/claude-sonnet-4-6",
+    "fallback": "deepseek/deepseek-chat",
     "providers": {
       "siliconflow": {
         "baseUrl": "https://api.siliconflow.cn/v1",
         "apiKey": "sk-xxxxx",
         "models": ["deepseek-ai/DeepSeek-V3", "Qwen/Qwen2.5-72B-Instruct"]
       },
-      "anthropic": {
-        "apiKey": "sk-ant-xxxxx",
-        "models": ["claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5"]
+      "deepseek": {
+        "apiKey": "sk-xxxxx",
+        "models": ["deepseek-chat", "deepseek-coder"]
       },
       "ollama": {
         "baseUrl": "http://localhost:11434",
@@ -94,9 +92,9 @@ OpenClaw 可以根据任务自动选择合适的模型：
 {
   "llm": {
     "routing": {
-      "simple": "anthropic/claude-haiku-4-5",
-      "standard": "anthropic/claude-sonnet-4-6",
-      "complex": "anthropic/claude-opus-4-6"
+      "simple": "siliconflow/Qwen/Qwen2.5-7B-Instruct",
+      "standard": "siliconflow/deepseek-ai/DeepSeek-V3",
+      "complex": "deepseek/deepseek-chat"
     }
   }
 }
@@ -116,13 +114,13 @@ OpenClaw 可以根据任务自动选择合适的模型：
 {
   "skills": {
     "weather": {
-      "model": "anthropic/claude-haiku-4-5"
+      "model": "siliconflow/Qwen/Qwen2.5-7B-Instruct"
     },
     "code-reviewer": {
-      "model": "anthropic/claude-opus-4-6"
+      "model": "deepseek/deepseek-chat"
     },
     "translator": {
-      "model": "openai/gpt-4o"
+      "model": "moonshot/moonshot-v1-128k"
     }
   }
 }
@@ -168,10 +166,10 @@ openclaw config set llm.default "ollama/qwen2.5:72b"
 {
   "llm": {
     "default": "ollama/qwen2.5:72b",
-    "fallback": "anthropic/claude-sonnet-4-6",
+    "fallback": "siliconflow/deepseek-ai/DeepSeek-V3",
     "routing": {
       "simple": "ollama/phi4:14b",
-      "complex": "anthropic/claude-opus-4-6"
+      "complex": "deepseek/deepseek-chat"
     }
   }
 }
@@ -234,7 +232,7 @@ openclaw usage --by-skill
 
 **本地模型质量不够**：对于复杂任务，本地模型确实不如 Claude Opus。建议设置自动回退：本地模型处理失败时自动切换到云端。
 
-**API 限流**：Anthropic 和 OpenAI 都有 RPM（每分钟请求数）限制。如果遇到 429 错误，减少并发任务数或升级 API tier。
+**API 限流**：大部分提供商都有 RPM（每分钟请求数）限制。如果遇到 429 错误，减少并发任务数或升级 API 套餐。
 
 ---
 

@@ -101,7 +101,7 @@ openclaw onboard --install-daemon
 |---------|---------|------|
 | **硅基流动 SiliconFlow** | 国内用户（首选） | 新用户 16 元免费 |
 | DeepSeek | 国内用户（备选） | 支付宝充值，按量计费 |
-| Anthropic / OpenAI | 国际用户 | 需国际信用卡 |
+| Kimi / MiniMax | 国内用户（其他选择） | 支持支付宝 |
 
 ### 4.2 获取 API Key：以硅基流动为例
 
@@ -135,10 +135,10 @@ openclaw onboard --install-daemon
 <details>
 <summary>其他提供商的 API Key 获取方式</summary>
 
-- **DeepSeek**：访问 https://platform.deepseek.com ，注册后在控制台创建密钥，支持支付宝充值
+- **DeepSeek（深度求索）**：访问 https://platform.deepseek.com ，注册后在控制台创建密钥，支持支付宝充值
+- **Kimi（月之暗面）**：访问 https://platform.moonshot.cn ，国内团队，中文理解能力强
+- **MiniMax（稀宇科技）**：访问 https://platform.minimaxi.com ，支持语音和多模态
 - **OpenRouter**：访问 https://openrouter.ai ，一个 Key 可访问多家模型
-- **Anthropic**：访问 https://console.anthropic.com ，需要国际信用卡
-- **OpenAI**：访问 https://platform.openai.com ，需要国际信用卡
 
 </details>
 
@@ -148,9 +148,8 @@ openclaw onboard --install-daemon
 
 ```
 ◇  Model/auth provider
-│  ○ Anthropic (Claude)
-│  ○ OpenAI (GPT)
 │  ○ DeepSeek
+│  ○ Kimi (Moonshot)
 │  ○ OpenRouter
 │  ● Custom（自定义 API 端点）← 硅基流动选这个
 ```

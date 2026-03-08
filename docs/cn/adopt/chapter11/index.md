@@ -18,7 +18,7 @@
 |------|------|---------|
 | `401 Unauthorized` | API Key 无效或过期 | 检查并更新 API Key |
 | `429 Too Many Requests` | 达到 API 调用限制 | 减少并发任务，或升级 API 套餐 |
-| 连接超时 | 网络问题（尤其国内访问 Anthropic） | 配置 HTTP_PROXY |
+| 连接超时 | 网络问题（尤其访问海外 API） | 配置 HTTP_PROXY 或改用国内提供商（如硅基流动） |
 | `503 Service Unavailable` | API 服务暂时不可用 | 等待恢复，或切换到备用模型 |
 
 ### 1.3 渠道接入问题
