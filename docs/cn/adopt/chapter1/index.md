@@ -252,7 +252,7 @@ openclaw onboard --install-daemon
 ```
 ◇  Model/auth provider
 │  ○ DeepSeek
-│  ○ Kimi (Moonshot)
+│  ○ Kimi
 │  ○ OpenRouter
 │  ● Custom（自定义 API 端点）← 硅基流动选这个
 ```
