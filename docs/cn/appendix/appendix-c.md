@@ -350,17 +350,147 @@ chmod 755 ~/.openclaw/workspace/skills/my-skill/
 
 ---
 
-## 九、技能开发清单
+## 九、实战案例：tavily-search 技能解析
+
+以 ClawHub 上的 [tavily-search](https://clawhub.ai/arun-8687/tavily-search)（v1.0.0）为例，看一个真实技能的完整结构。这是一个通过 Tavily API 为 AI Agent 提供网络搜索能力的技能。
+
+### 目录结构
+
+```
+tavily-search-1.0.0/
+├── SKILL.md           # 技能定义（frontmatter + 使用说明）
+├── _meta.json         # ClawHub 发布元数据
+└── scripts/
+    ├── search.mjs     # 网络搜索实现
+    └── extract.mjs    # 网页内容提取实现
+```
+
+### SKILL.md 完整内容
+
+```markdown
+---
+name: tavily
+description: AI-optimized web search via Tavily API. Returns concise, relevant results for AI agents.
+homepage: https://tavily.com
+metadata: {"clawdbot":{"emoji":"🔍","requires":{"bins":["node"],"env":["TAVILY_API_KEY"]},"primaryEnv":"TAVILY_API_KEY"}}
+---
+
+# Tavily Search
+
+AI-optimized web search using Tavily API. Designed for AI agents - returns clean, relevant content.
+
+## Search
+
+​```bash
+node {baseDir}/scripts/search.mjs "query"
+node {baseDir}/scripts/search.mjs "query" -n 10
+node {baseDir}/scripts/search.mjs "query" --deep
+node {baseDir}/scripts/search.mjs "query" --topic news
+​```
+
+## Options
+
+- `-n <count>`: Number of results (default: 5, max: 20)
+- `--deep`: Use advanced search for deeper research (slower, more comprehensive)
+- `--topic <topic>`: Search topic - `general` (default) or `news`
+- `--days <n>`: For news topic, limit to last n days
+
+## Extract content from URL
+
+​```bash
+node {baseDir}/scripts/extract.mjs "https://example.com/article"
+​```
+
+Notes:
+- Needs `TAVILY_API_KEY` from https://tavily.com
+- Tavily is optimized for AI - returns clean, relevant snippets
+- Use `--deep` for complex research questions
+- Use `--topic news` for current events
+```
+
+### 解析要点
+
+**1. Frontmatter 设计**
+
+| 字段 | 值 | 作用 |
+|------|---|------|
+| `name` | `tavily` | 技能标识符，用户通过 `clawhub install tavily-search` 安装后以此名称识别 |
+| `description` | `AI-optimized web search...` | AI 根据这段描述判断何时调用此技能——写清楚"做什么"很关键 |
+| `homepage` | `https://tavily.com` | 指向服务官网，方便用户注册获取 API Key |
+| `metadata.requires.bins` | `["node"]` | 声明需要 Node.js 运行时，OpenClaw 会在技能加载时检查 |
+| `metadata.requires.env` | `["TAVILY_API_KEY"]` | 声明需要环境变量，未设置时技能标记为"不可用"而非报错 |
+| `metadata.primaryEnv` | `TAVILY_API_KEY` | 告诉 OpenClaw 配置向导该提示用户填哪个 Key |
+
+**2. 脚本设计模式**
+
+`search.mjs` 的核心逻辑（约 100 行）：
+
+```javascript
+// 1. 解析命令行参数
+const query = args[0];
+let n = 5, searchDepth = "basic", topic = "general";
+
+// 2. 读取环境变量中的 API Key
+const apiKey = (process.env.TAVILY_API_KEY ?? "").trim();
+if (!apiKey) { console.error("Missing TAVILY_API_KEY"); process.exit(1); }
+
+// 3. 调用 Tavily API
+const resp = await fetch("https://api.tavily.com/search", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ api_key: apiKey, query, search_depth: searchDepth, ... }),
+});
+
+// 4. 格式化输出为 Markdown（AI 友好的格式）
+if (data.answer) console.log("## Answer\n" + data.answer);
+for (const r of results) {
+  console.log(`- **${r.title}** (relevance: ${(r.score * 100).toFixed(0)}%)`);
+  console.log(`  ${r.url}`);
+}
+```
+
+**关键设计原则**：
+- **输出 Markdown 格式**：AI Agent 能直接解析结构化结果
+- **参数校验前置**：缺少 API Key 时 `process.exit(1)` 而非抛异常，让 OpenClaw 能捕获并提示用户
+- **结果截断**：`content.slice(0, 300)` 避免输出过长影响 Agent 上下文窗口
+- **`{baseDir}` 变量**：SKILL.md 中用 `{baseDir}` 引用技能目录，OpenClaw 运行时自动替换为实际路径
+
+**3. 配置方式**
+
+用户安装后，在 `openclaw.json` 中配置 API Key：
+
+```json
+{
+  "skills": {
+    "entries": {
+      "tavily": {
+        "enabled": true
+      }
+    }
+  },
+  "env": {
+    "TAVILY_API_KEY": "tvly-你的密钥"
+  }
+}
+```
+
+或直接设置环境变量：`export TAVILY_API_KEY=tvly-你的密钥`
+
+---
+
+## 十、技能开发清单
 
 开发技能前，确保完成以下检查：
 
 - [ ] SKILL.md frontmatter 包含 name 和 description
-- [ ] description 清晰描述触发条件
-- [ ] 环境变量需求在 metadata.openclaw.requires.env 中声明
-- [ ] 敏感信息使用 SecretRef 或环境变量
-- [ ] 错误处理完善
-- [ ] 在本地测试通过
+- [ ] description 清晰描述触发条件（AI 靠这个决定何时调用）
+- [ ] 环境变量需求在 metadata.requires.env 中声明
+- [ ] 系统命令依赖在 metadata.requires.bins 中声明
+- [ ] 脚本输出 Markdown 格式（对 AI 友好）
+- [ ] 敏感信息使用环境变量或 SecretRef，不硬编码
+- [ ] 错误处理完善（缺少 Key 时 exit(1)，API 失败时输出清晰错误）
+- [ ] 在本地测试通过（`openclaw skills check` + 实际对话测试）
 
 ---
 
-**提示**：OpenClaw 的技能系统正在快速发展中，建议关注官方文档和 GitHub 仓库获取最新信息。
+**提示**：OpenClaw 的技能系统正在快速发展中，建议关注官方文档和 GitHub 仓库获取最新信息。更多技能示例可在 [ClawHub](https://clawhub.ai) 浏览。
