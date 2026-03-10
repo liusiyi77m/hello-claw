@@ -303,6 +303,8 @@ openclaw usage --by-skill
 
 **减少活跃技能**：每个活跃技能的说明都会加入上下文，增加 Token 消耗。只保留常用技能。
 
+**长程记忆优化**：如果你的使用场景涉及长对话（50+ 轮）或多实例协作，可以考虑安装 [OpenViking](https://github.com/volcengine/OpenViking) 记忆插件。实测可将输入 Token 消耗降低约 91%，同时提升任务完成率。详见[第九章记忆增强方案](/cn/adopt/chapter9/)。
+
 </details>
 
 <!-- TODO: 补充 openclaw usage 命令输出截图（Token 消耗统计） -->

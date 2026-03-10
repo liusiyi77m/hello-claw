@@ -2,7 +2,7 @@
 
 > **前提**：本章假设你已完成第一章的安装配置。技能系统是 OpenClaw 的核心扩展机制，所有用户都建议了解。
 
-OpenClaw 的技能系统就像手机的 App Store，让你可以为龙虾安装各种能力扩展。想让它查天气？安装天气技能。想让它管理 Gmail？安装邮件技能。截至 2026 年初，社区维护的 ClawHub 注册表已有超过 13,000 个技能，覆盖生产力、开发、运维、内容创作等多个领域。
+OpenClaw 的技能系统就像手机的 App Store，让你可以为龙虾安装各种能力扩展。想让它查天气？安装天气技能。想让它管理 Gmail？安装邮件技能。截至 2026 年 3 月，社区维护的 ClawHub 注册表已有超过 **16,000** 个技能，覆盖生产力、开发、运维、内容创作等多个领域。
 
 ## 1. 什么是技能
 
@@ -218,11 +218,52 @@ frontmatter 字段说明：
 
 </details>
 
-## 4. 常用技能推荐
+## 4. 新手必装：十大推荐技能
+
+ClawHub 上有超过 16,000 个技能，质量参差不齐——有的非常实用，有的只是披着 Skill 壳的模型伪装，甚至有的会窃取你的 API Key。以下是从中精选的 10 个**安全且实用**的技能，建议按顺序安装：
+
+### 第一个必装：安全守卫
+
+```bash
+clawhub install skill-vetter
+```
+
+**Skill Vetter** 会自动检测你后续安装的每一个技能，扫描是否存在危险行为（如窃取 API Key、上传个人信息）。**请务必第一个安装它**。
+
+### 核心能力技能
+
+| 序号 | 技能 | 安装命令 | 一句话说明 |
+|------|------|---------|-----------|
+| 2 | **Tavily Web Search** | `clawhub install tavily-search` | 专为 Agent 设计的联网搜索，结果全、新、简洁 |
+| 3 | **Agent Browser** | `clawhub install agent-browser` | 让龙虾打开浏览器，抓取信息、填写表单、操作网页 |
+| 4 | **Summarize** | `clawhub install summarize` | 对网页、PDF、图像、音频、YouTube 等内容生成摘要 |
+| 5 | **Gog** | `clawhub install gog` | Google 全家桶：Gmail、Calendar、Drive、Docs 一键打包 |
+| 6 | **GitHub** | `clawhub install github` | PR 管理、Issue 追踪、代码搜索、仓库操作，开发者必备 |
+| 7 | **Obsidian** | `clawhub install obsidian` | 接入本地 Obsidian 笔记库，整理笔记、知识关联 |
+
+### 进阶能力技能
+
+| 序号 | 技能 | 安装命令 | 一句话说明 |
+|------|------|---------|-----------|
+| 8 | **Self-Improving Agent** | `clawhub install self-improving-agent` | 记录经验教训和纠正措施，让龙虾持续自我改进 |
+| 9 | **Proactive Agent** | `clawhub install proactive-agent` | 赋予龙虾主动性，记住历史行为并根据环境变化自动执行任务 |
+| 10 | **Capability Evolver** | `clawhub install capability-evolver` | 让龙虾自主进化——分析已有流程，在薄弱环节创造新 Skill 辅助迭代 |
+
+> **一键安装全部**：你也可以直接告诉龙虾"帮我安装 skill-vetter、tavily-search、agent-browser"，它会帮你逐个下载安装。
+
+### 更多精选技能
+
+ClawHub 上技能数量庞大，社区项目 [awesome-openclaw-skills](https://github.com/VoltAgent/awesome-openclaw-skills) 从中精选了 **5,000+** 个高质量技能，按场景分类，过滤了大量低质和危险技能。如果上面 10 个不够用，去那里逛逛。
+
+---
+
+## 5. 技能分类速查
+
+以下按使用场景分类列出更多常用技能，方便按需选装：
 
 <!-- TODO: 补充每个技能的使用截图 -->
 
-### 4.1 生产力套件
+### 5.1 生产力套件
 
 | 技能 | 安装命令 | 功能 |
 |------|---------|------|
@@ -232,7 +273,7 @@ frontmatter 字段说明：
 | Slack | `clawhub install slack` | 消息发送、频道管理、文件上传 |
 | Obsidian | `clawhub install obsidian` | Markdown 笔记库管理，支持 wikilink |
 
-### 4.2 开发工具
+### 5.2 开发工具
 
 | 技能 | 安装命令 | 功能 |
 |------|---------|------|
@@ -242,7 +283,7 @@ frontmatter 字段说明：
 | SQL Toolkit | `clawhub install sql-toolkit` | PostgreSQL/MySQL/SQLite 只读查询 |
 | CI/CD Pipeline | `clawhub install cicd-pipeline` | GitHub/GitLab/Jenkins 流水线控制 |
 
-### 4.3 运维与基础设施
+### 5.3 运维与基础设施
 
 | 技能 | 安装命令 | 功能 |
 |------|---------|------|
@@ -250,7 +291,7 @@ frontmatter 字段说明：
 | AWS Infrastructure | `clawhub install aws-infra` | EC2、S3、Lambda 对话式管理 |
 | Azure DevOps | `clawhub install azure-devops` | 项目、仓库、看板、流水线管理 |
 
-### 4.4 内容与社交
+### 5.4 内容与社交
 
 | 技能 | 安装命令 | 功能 |
 |------|---------|------|
@@ -258,7 +299,7 @@ frontmatter 字段说明：
 | X (Twitter) | `clawhub install x-api` | 推文、线程、媒体附件 |
 | Blogburst | `clawhub install blogburst` | 长文内容自动拆分为社交媒体帖子 |
 
-### 4.5 个人助理
+### 5.5 个人助理
 
 | 技能 | 安装命令 | 功能 |
 |------|---------|------|
@@ -267,7 +308,7 @@ frontmatter 字段说明：
 | AgentMail | `clawhub install agentmail` | IMAP/SMTP 邮件管理、线程摘要、自动回复 |
 | Home Assistant | `clawhub install home-assistant` | 智能家居设备控制 |
 
-### 4.6 特殊技能
+### 5.6 特殊技能
 
 | 技能 | 安装命令 | 功能 |
 |------|---------|------|
@@ -275,7 +316,7 @@ frontmatter 字段说明：
 | Hacker News | `clawhub install hackernews` | 技术新闻摘要和个性化推送 |
 | Self-Improving | `clawhub install self-improving` | 记录成功/失败执行，自我优化模式识别 |
 
-## 5. 配置技能
+## 6. 配置技能
 
 安装后可以随时修改技能配置。技能配置统一存放在工作区级的 `openclaw.json` 中：
 
@@ -303,11 +344,11 @@ openclaw config
 <details>
 <summary>展开：创建和发布自定义技能</summary>
 
-## 6. 创建自定义技能
+## 7. 创建自定义技能
 
 如果 ClawHub 上没有你需要的技能，可以自己创建。
 
-### 6.1 最小化技能
+### 7.1 最小化技能
 
 创建一个查询 IP 地址的技能，只需要一个 `SKILL.md`：
 
@@ -327,7 +368,7 @@ curl -s https://ipinfo.io/json
 返回结果中包含 IP、城市、地区、国家、运营商等信息。
 ```
 
-### 6.2 安装自定义技能
+### 7.2 安装自定义技能
 
 ```bash
 # 从本地目录安装
@@ -337,7 +378,7 @@ clawhub install ./my-ip
 cp -r my-ip ~/.openclaw/skills/
 ```
 
-### 6.3 发布到 ClawHub
+### 7.3 发布到 ClawHub
 
 如果你的技能对他人有用，可以提交到 ClawHub：
 
@@ -347,7 +388,7 @@ cp -r my-ip ~/.openclaw/skills/
 # 3. 提交 Pull Request
 ```
 
-### 6.4 使用 Skill Seekers 自动生成技能
+### 7.4 使用 Skill Seekers 自动生成技能
 
 如果你想为特定技术栈或文档快速生成技能，可以使用 **Skill Seekers** 工具。它能自动将文档网站、GitHub 仓库、PDF 和视频转换为 Claude/Gemini/OpenAI Skills。
 
@@ -384,7 +425,7 @@ skill-seekers package output/react --target claude
 
 </details>
 
-## 7. 飞书插件：技能实战案例
+## 8. 飞书插件：技能实战案例
 
 飞书官方插件是一个典型的复合技能，展示了技能如何深度集成外部服务。安装飞书插件后（安装步骤参见第三章 2.4 节），OpenClaw 不仅能通过飞书收发消息，还能直接操作飞书的办公数据：
 
@@ -415,13 +456,47 @@ skill-seekers package output/react --target claude
 <details>
 <summary>展开：性能考量与安全提示</summary>
 
-## 8. 技能系统的性能考量
+## 9. 技能系统的性能考量
 
-技能并非越多越好。每个活跃技能都会增加上下文加载量，影响响应速度。建议：
+技能并非越多越好。每个活跃技能都会增加上下文加载量，影响响应速度。
+
+### 技能加载机制
+
+OpenClaw 采用**三级加载优先级**：
+
+| 优先级 | 来源 | 路径 | 说明 |
+|--------|------|------|------|
+| 1（最高） | 工作区级 | `~/.openclaw/workspace/skills/` | 你手动放置或针对当前工作区安装的技能 |
+| 2 | 共享级 | `~/.openclaw/skills/` | `clawhub install` 安装的全局技能 |
+| 3（最低） | 内置级 | OpenClaw 安装目录 | 随 OpenClaw 一起发布的默认技能 |
+
+同名技能按优先级覆盖——如果工作区有一个 `web-search`，它会屏蔽全局和内置的同名技能。
+
+每次对话开始时，OpenClaw 会生成一份**技能快照**（snapshot），将所有活跃技能的 SKILL.md 内容注入上下文。技能采用**懒加载**策略：只有在对话中被触发（匹配到关键词或被 AI 主动选用）时，才会执行技能脚本。
+
+### 性能影响与建议
+
+| 技能数量 | 上下文占用 | 响应速度影响 | 建议 |
+|---------|-----------|-------------|------|
+| 1-5 个 | 低 | 几乎无感 | 新手推荐 |
+| 5-10 个 | 中等 | 略有延迟 | 日常使用合理上限 |
+| 10-20 个 | 较高 | 明显变慢 | 建议禁用不常用的 |
+| 20+ 个 | 很高 | 严重影响 | 不推荐 |
 
 **按需安装**：只安装真正需要的技能。5-10 个常用技能是一个合理的数量。
 
-**定期清理**：卸载不再使用的技能，保持系统精简。
+**定期清理**：用 `clawhub list` 查看所有已安装技能，用 `clawhub uninstall <技能名>` 卸载不再使用的技能，保持系统精简。
+
+```bash
+# 查看当前安装了哪些技能
+clawhub list
+
+# 只看活跃的技能
+clawhub list --active
+
+# 卸载不需要的技能
+clawhub uninstall old-unused-skill
+```
 
 **保护敏感信息**：技能配置中的 API 密钥存储在本地，但仍要注意不要将 `~/.openclaw/skills/` 目录上传到公开仓库。
 
@@ -429,12 +504,18 @@ skill-seekers package output/react --target claude
 
 > **安全警告**：2026 年 2 月的安全审计（ClawHavoc 事件）发现 ClawHub 上约 12% 的技能存在恶意行为或安全漏洞。OpenClaw 团队已进行清理，但安装第三方技能时仍需保持警惕。建议优先使用高星标技能，并检查 SKILL.md 中的指令内容。
 
+**安装安全守卫**：强烈建议安装 `skill-vetter`（详见本章第 4 节），它会自动扫描你后续安装的每一个技能，检测是否存在窃取 API Key、上传个人信息等危险行为：
+
+```bash
+clawhub install skill-vetter
+```
+
 </details>
 
 <details>
 <summary>展开阅读：技能与 MCP 的关系</summary>
 
-## 9. 技能与 MCP 的关系
+## 10. 技能与 MCP 的关系
 
 OpenClaw 的技能系统与 MCP（Model Context Protocol）是两个不同层面的概念：
 

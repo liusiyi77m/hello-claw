@@ -269,6 +269,29 @@ USER.md 存放你的基本信息和偏好，让助理不用每次都问你叫什
 
 > **新手建议**：AGENTS.md 的默认模板已经很好用了，一般不需要修改。等你熟悉 OpenClaw 后，再根据需要调整。
 
+<details>
+<summary>展开：多 Agent 协作模式</summary>
+
+#### sessions_send vs sessions_spawn
+
+OpenClaw 在处理复杂任务时，可以启动多个 Agent 协作。AGENTS.md 中的规则决定了何时、如何启动子 Agent：
+
+| 模式 | 命令 | 说明 | 适用场景 |
+|------|------|------|---------|
+| **send** | `sessions_send` | 向已有会话发送消息，复用上下文 | 追问、补充指令、连续对话 |
+| **spawn** | `sessions_spawn` | 启动全新的独立 Agent 会话 | 并行任务、隔离执行、不同角色分工 |
+
+举个例子：你让助理"帮我写一篇文章，同时查一下明天的天气"。助理可能会：
+1. 自己处理写文章的任务（主会话）
+2. `sessions_spawn` 一个新 Agent 去查天气（子会话）
+3. 子 Agent 完成后把天气结果发回来
+
+这一切都是自动的，你不需要手动操控。但如果你想自定义协作行为（比如限制最大并发 Agent 数量、定义子 Agent 的角色），可以在 AGENTS.md 中配置。
+
+> **新手可以忽略这部分**。默认的 AGENTS.md 已经配好了合理的协作规则。
+
+</details>
+
 ### 7.5 TOOLS.md —— 助理的"设备清单"
 
 > **一句话解释**：记录你的个人环境信息，比如服务器地址、设备名称等。就像给助理一张"办公室设备清单"。
@@ -315,6 +338,92 @@ USER.md 存放你的基本信息和偏好，让助理不用每次都问你叫什
 OpenClaw 还会自动维护 `memory/` 文件夹下的每日日志（`memory/2026-03-08.md`），记录当天的对话要点。MEMORY.md 则是从这些日志中提炼的精华。
 
 > **隐私保护**：MEMORY.md 只在你和助理的私聊中加载，不会在群聊中暴露你的个人信息。
+
+<details>
+<summary>展开：记忆系统的工作原理</summary>
+
+#### 会话记录与压缩
+
+每次对话都会生成一个 **JSONL 格式的会话文件**（存储在 `~/.openclaw/sessions/` 目录下），完整记录对话的每一轮问答。随着对话进行，会话文件会越来越大。
+
+为了控制上下文长度，OpenClaw 采用**自动压缩**策略：
+
+| 阶段 | 触发条件 | 处理方式 |
+|------|---------|---------|
+| 实时对话 | 上下文接近模型窗口限制 | 自动压缩早期对话为摘要，保留最近的完整内容 |
+| 会话结束 | 对话结束时 | 提取关键信息写入当天的 `memory/YYYY-MM-DD.md` |
+| 定期整理 | 记忆文件积累到一定量 | 将多天日志精炼合并到 MEMORY.md |
+
+#### 记忆加载策略
+
+每次新对话开始时，OpenClaw 不会加载所有历史记忆，而是按优先级选择性加载：
+
+1. **MEMORY.md** — 始终加载（长期精华）
+2. **今天的日志** `memory/2026-03-09.md` — 始终加载
+3. **昨天的日志** `memory/2026-03-08.md` — 始终加载
+4. **更早的日志** — 仅在需要时按相关性检索
+
+这种设计确保助理既有长期记忆，又不会因为历史数据太多而拖慢响应速度。
+
+#### 存储空间管理
+
+记忆文件会随时间增长。你可以用以下命令清理旧数据：
+
+```bash
+# 清理 30 天前的会话记录
+openclaw cleanup --conversations --older-than 30d
+```
+
+> **小提示**：MEMORY.md 中的精华内容不受清理命令影响，只有原始会话记录和每日日志会被清理。重要信息已经被提炼到 MEMORY.md 中了。
+
+</details>
+
+<details>
+<summary>展开：OpenViking —— 长程记忆增强方案</summary>
+
+#### 原生记忆的局限
+
+随着使用时间增长，你可能会遇到这些情况：
+
+- **长对话遗忘**：超过几十轮对话后，助理开始忘记早期交代的信息（如 API 密钥、工作目标）
+- **技能调用重复犯错**：每次新对话调用同一个 Skill 时，都会犯同样的参数格式错误
+- **多实例记忆隔离**：如果你部署了多个 OpenClaw 实例（详见第七章），它们之间的记忆无法共享
+
+这些是 OpenClaw 原生 memory-core 模块在长程任务中的已知限制。
+
+#### OpenViking：外挂记忆体
+
+[OpenViking](https://github.com/volcengine/OpenViking) 是一个开源的 AI Agent 上下文数据库，可以作为 OpenClaw 的"外挂记忆体"，解决上述长程记忆痛点：
+
+| 能力 | 原生记忆 | 原生 + OpenViking |
+|------|---------|------------------|
+| 任务完成率 | 35.65% | **51.23%**（+43%） |
+| 输入 Token 消耗 | 24,611,530 | **2,099,622**（-91%） |
+| Skill 经验沉淀 | ❌ 每次重新试错 | ✅ 自动记住"避坑指南" |
+| 百轮对话后记忆 | ❌ 容易遗忘核心目标 | ✅ 始终保持记忆一致性 |
+| 多实例记忆共享 | ❌ 各自独立 | ✅ 统一用户记忆目录 |
+
+> 以上数据来自 [LoCoMo10 评测集](https://github.com/snap-research/locomo) 的 1540 条用例测试。
+
+#### 安装方式
+
+**本地插件安装**（最简单）：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/volcengine/OpenViking/main/examples/openclaw-memory-plugin/install.sh | bash
+```
+
+前置条件：Python >= 3.10、Node.js >= 22。脚本会自动校验依赖。
+
+**火山引擎云上版本**：适合需要稳定环境的团队，免去本地部署维护。详见[火山引擎文档](https://www.volcengine.com/docs/6396/2249500?lang=zh)。
+
+**ArkClaw 用户**：后续将内置 OpenViking 记忆能力，无需额外配置。
+
+> **新手建议**：OpenClaw 原生记忆对于日常使用已经够用。如果你发现助理在长对话中频繁"失忆"，或者需要多个 OpenClaw 实例协作，再考虑安装 OpenViking。
+
+详细文档：[OpenViking 安装指南（中文）](https://github.com/LinQiang391/OpenViking/blob/main/examples/openclaw-memory-plugin/INSTALL-ZH.md)
+
+</details>
 
 ### 7.7 HEARTBEAT.md —— 助理的"巡检清单"
 

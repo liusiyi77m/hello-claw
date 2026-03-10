@@ -22,6 +22,7 @@
 | `429 Too Many Requests` | 达到 API 调用限制 | 减少并发任务，或升级 API 套餐 |
 | 连接超时 | 网络问题（尤其访问海外 API） | 配置网络代理（HTTP_PROXY 环境变量）或改用国内提供商（如硅基流动，参考第一章） |
 | `503 Service Unavailable` | API 服务暂时不可用 | 等待恢复，或切换到备用模型 |
+| 助理"失忆"（忘记之前交代的信息） | 长对话超出上下文窗口，原生记忆压缩丢失细节 | 将关键信息写入 USER.md 或 MEMORY.md（详见[第九章](/cn/adopt/chapter9/)）；长程场景可安装 [OpenViking](https://github.com/volcengine/OpenViking) 记忆插件 |
 
 ### 1.3 渠道接入问题
 
