@@ -6,7 +6,7 @@
 
 /* 关键：告诉 VitePress 公告栏的高度，让导航栏正确下移 */
 :root {
-  --vp-layout-top-height: 40px;
+  --vp-layout-top-height: 0px;
 }
 
 .announcement-banner {

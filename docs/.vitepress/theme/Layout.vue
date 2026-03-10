@@ -48,7 +48,7 @@
           </span>
         </h1>
         
-        <h2 class="!text-6xl md:!text-8xl !leading-none font-bold !tracking-widest uppercase !mt-0 !mb-8 !border-0 !pt-0">
+        <h2 class="!text-6xl md:!text-8xl !leading-none font-black !tracking-[0.12em] uppercase !mt-0 !mb-8 !border-0 !pt-0">
           <span class="animate-gradient-text">
             哈喽！龙虾
           </span> 👋
@@ -128,15 +128,31 @@
                 <div class="w-3 h-3 rounded-full bg-[#27c93f]" />
               </div>
               <div class="flex gap-2">
-                <button class="bg-[#00e5ff] text-black text-xs font-bold px-3 py-1 rounded">One-liner</button>
-                <button class="text-gray-400 hover:text-white text-xs px-3 py-1 transition-colors">npm</button>
-                <button class="text-gray-400 hover:text-white text-xs px-3 py-1 transition-colors">Hackable</button>
-                <button class="text-gray-400 hover:text-white text-xs px-3 py-1 transition-colors">macOS</button>
+                <button
+                  @click="quickStartMode = 'powershell'"
+                  :class="quickStartMode === 'powershell' ? 'bg-[#00e5ff] text-black' : 'text-gray-400 hover:text-white'"
+                  class="text-xs font-bold px-3 py-1 rounded transition-colors"
+                >
+                  PowerShell
+                </button>
+                <button
+                  @click="quickStartMode = 'macos'"
+                  :class="quickStartMode === 'macos' ? 'bg-[#00e5ff] text-black' : 'text-gray-400 hover:text-white'"
+                  class="text-xs font-bold px-3 py-1 rounded transition-colors"
+                >
+                  macOS
+                </button>
+                <button
+                  @click="quickStartMode = 'linux'"
+                  :class="quickStartMode === 'linux' ? 'bg-[#00e5ff] text-black' : 'text-gray-400 hover:text-white'"
+                  class="text-xs font-bold px-3 py-1 rounded transition-colors"
+                >
+                  Linux
+                </button>
               </div>
             </div>
             <div class="flex items-center gap-4">
-              <span class="text-gray-400 text-xs">macOS/Linux</span>
-              <button class="text-[#ff4d4d] text-xs hover:text-[#ff6b6b] transition-colors">change</button>
+              <span class="text-gray-400 text-xs">{{ quickStartLabel }}</span>
               <span class="border border-white/10 text-gray-400 text-xs px-2 py-0.5 rounded flex items-center gap-1">
                 β BETA
               </span>
@@ -144,13 +160,13 @@
           </div>
           
           <div class="p-6 font-mono text-sm">
-            <p class="text-gray-500 mb-4"># Works everywhere. Installs everything. You're welcome. 🦞</p>
-            <div class="flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <span class="text-[#ff4d4d]">$</span>
-                <span class="text-gray-300">curl -fsSL https://openclaw.ai/install.sh | bash</span>
+            <p class="text-gray-500 mb-4"># 复制粘贴即可开始：安装 → 配置 → 第一次对话</p>
+            <div class="flex items-start justify-between gap-4 group">
+              <div class="flex items-start gap-3 w-full">
+                <span class="text-[#ff4d4d] mt-[2px]">$</span>
+                <pre class="text-gray-300 whitespace-pre-wrap break-words w-full m-0">{{ quickStartCommand }}</pre>
               </div>
-              <button @click="copyCommand" class="p-2 rounded bg-white/5 text-gray-400 hover:text-white opacity-0 group-hover:opacity-100 transition-all">
+              <button @click="copyCommand" class="shrink-0 p-2 rounded bg-white/5 text-gray-400 hover:text-white opacity-0 group-hover:opacity-100 transition-all">
                 <span v-if="copied">✓</span>
                 <span v-else>📋</span>
               </button>
@@ -158,46 +174,46 @@
           </div>
         </div>
         <p class="text-center text-gray-500 text-sm mt-4">
-          Works on macOS, Windows & Linux. The one-liner installs Node.js and everything else for you.
+          以上命令来自本教程「第 1 章」的安装步骤，按你的系统选择即可。
         </p>
       </div>
 
       <!-- What It Does Section -->
       <div v-fade-in class="w-full max-w-5xl mt-32">
         <h3 class="!text-3xl md:!text-4xl !font-extrabold !leading-tight flex items-center gap-2 mb-8">
-          <span class="text-[#ff4d4d]">&gt;</span> What It Does
+          <span class="text-[#ff4d4d]">&gt;</span> 这套教程能带你做什么
         </h3>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-[#0f1623] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center gap-4 shadow-xl hover:-translate-y-1 transition-transform">
-            <div class="text-[#ff4d4d] mb-2 text-3xl">🏠</div>
-            <h4 class="!text-2xl !font-extrabold text-white">Runs on Your Machine</h4>
-            <p class="text-gray-400 !text-base !leading-relaxed">Mac, Windows, or Linux. Anthropic, OpenAI, or local models. Private by default—your data stays yours.</p>
+            <div class="text-[#ff4d4d] mb-2 text-3xl">🦞</div>
+            <h4 class="!text-2xl !font-extrabold text-white">领养你的龙虾</h4>
+            <p class="text-gray-400 !text-base !leading-relaxed">从安装配置到常用命令，再到自动化任务与 Skills，把 OpenClaw 真正用起来。</p>
           </div>
           <div class="bg-[#0f1623] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center gap-4 shadow-xl hover:-translate-y-1 transition-transform">
-            <div class="text-[#ff4d4d] mb-2 text-3xl">💬</div>
-            <h4 class="!text-2xl !font-extrabold text-white">Any Chat App</h4>
-            <p class="text-gray-400 !text-base !leading-relaxed">Talk to it on WhatsApp, Telegram, Discord, Slack, Signal, or iMessage. Works in DMs and group chats.</p>
+            <div class="text-[#ff4d4d] mb-2 text-3xl">🛠️</div>
+            <h4 class="!text-2xl !font-extrabold text-white">从零构建龙虾</h4>
+            <p class="text-gray-400 !text-base !leading-relaxed">拆解 OpenClaw 内部机制，理解提示词/工具/消息循环，并走向可定制的 Agent。</p>
           </div>
           <div class="bg-[#0f1623] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center gap-4 shadow-xl hover:-translate-y-1 transition-transform">
-            <div class="text-[#ff4d4d] mb-2 text-3xl">🧠</div>
-            <h4 class="!text-2xl !font-extrabold text-white">Persistent Memory</h4>
-            <p class="text-gray-400 !text-base !leading-relaxed">Remembers you and becomes uniquely yours. Your preferences, your context, your AI.</p>
+            <div class="text-[#ff4d4d] mb-2 text-3xl">📱</div>
+            <h4 class="!text-2xl !font-extrabold text-white">移动端随叫随到</h4>
+            <p class="text-gray-400 !text-base !leading-relaxed">把龙虾接入 QQ / 飞书 / Telegram，在常用聊天软件里完成日常工作流。</p>
           </div>
           <div class="bg-[#0f1623] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center gap-4 shadow-xl hover:-translate-y-1 transition-transform">
-            <div class="text-[#ff4d4d] mb-2 text-3xl">🌐</div>
-            <h4 class="!text-2xl !font-extrabold text-white">Web Access</h4>
-            <p class="text-gray-400 !text-base !leading-relaxed">Browses the web, reads articles, and summarizes content for you instantly.</p>
+            <div class="text-[#ff4d4d] mb-2 text-3xl">⚡</div>
+            <h4 class="!text-2xl !font-extrabold text-white">让它自动做事</h4>
+            <p class="text-gray-400 !text-base !leading-relaxed">定时简报、自动化报告、周期性任务，从“对话”升级为“系统”。</p>
           </div>
           <div class="bg-[#0f1623] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center gap-4 shadow-xl hover:-translate-y-1 transition-transform">
-            <div class="text-[#ff4d4d] mb-2 text-3xl">⌨️</div>
-            <h4 class="!text-2xl !font-extrabold text-white">Command Line</h4>
-            <p class="text-gray-400 !text-base !leading-relaxed">Execute scripts, manage files, and control your system through natural language.</p>
+            <div class="text-[#ff4d4d] mb-2 text-3xl">🧭</div>
+            <h4 class="!text-2xl !font-extrabold text-white">按路线学习</h4>
+            <p class="text-gray-400 !text-base !leading-relaxed">按章节递进：先上手、再实战、再拆解原理，最后进入定制与扩展。</p>
           </div>
           <div class="bg-[#0f1623] border border-white/5 rounded-2xl p-8 flex flex-col items-center text-center gap-4 shadow-xl hover:-translate-y-1 transition-transform">
-            <div class="text-[#ff4d4d] mb-2 text-3xl">🧩</div>
-            <h4 class="!text-2xl !font-extrabold text-white">Extensible</h4>
-            <p class="text-gray-400 !text-base !leading-relaxed">Build your own skills and integrations. The possibilities are endless.</p>
+            <div class="text-[#ff4d4d] mb-2 text-3xl">🤝</div>
+            <h4 class="!text-2xl !font-extrabold text-white">一起完善</h4>
+            <p class="text-gray-400 !text-base !leading-relaxed">欢迎提交 PR / Issue：补充案例、修正文档、一起把教程打磨成“能用”的版本。</p>
           </div>
         </div>
       </div>
@@ -206,73 +222,53 @@
       <div v-fade-in class="w-full max-w-5xl mt-32 flex flex-col items-center">
         <div class="w-full">
           <h3 class="!text-3xl md:!text-4xl !font-extrabold !leading-tight flex items-center gap-2 mb-8">
-            <span class="text-[#ff4d4d]">&gt;</span> Works With Everything
+            <span class="text-[#ff4d4d]">&gt;</span> 直接跳转
           </h3>
         </div>
         
         <div class="flex flex-wrap justify-center gap-4 max-w-4xl mb-8">
-          <div v-for="item in integrations" :key="item.name" class="flex items-center gap-2 bg-[#0f1623] border border-white/5 rounded-full px-4 py-2 hover:bg-white/5 transition-colors cursor-pointer">
+          <a
+            v-for="item in quickLinks"
+            :key="item.text"
+            :href="item.external ? item.link : withBase(item.link)"
+            :target="item.external ? '_blank' : undefined"
+            :rel="item.external ? 'noreferrer' : undefined"
+            class="flex items-center gap-2 bg-[#0f1623] border border-white/5 rounded-full px-4 py-2 hover:bg-white/5 transition-colors"
+          >
             <span class="text-lg">{{ item.icon }}</span>
-            <span class="text-sm text-gray-300">{{ item.name }}</span>
-          </div>
+            <span class="text-sm text-gray-300">{{ item.text }}</span>
+          </a>
         </div>
         
         <div class="flex items-center gap-6 text-[#ff4d4d] text-sm font-medium">
-          <a href="#" class="hover:text-[#ff6b6b] transition-colors flex items-center gap-1">
-            View all 50+ integrations <span>→</span>
+          <a :href="withBase('/cn/adopt/chapter0')" class="hover:text-[#ff6b6b] transition-colors flex items-center gap-1">
+            从「写在开头」开始 <span>→</span>
           </a>
           <span class="text-gray-600">•</span>
-          <a href="#" class="hover:text-[#ff6b6b] transition-colors flex items-center gap-1">
-            See what people built <span>→</span>
+          <a :href="withBase('/cn/build/')" class="hover:text-[#ff6b6b] transition-colors flex items-center gap-1">
+            直接进入「构建篇」 <span>→</span>
           </a>
-        </div>
-      </div>
-
-      <!-- Sponsors Section -->
-      <div v-fade-in class="w-full max-w-5xl mt-32">
-        <h3 class="!text-3xl md:!text-4xl !font-extrabold !leading-tight flex items-center gap-2 mb-8">
-          <span class="text-[#ff4d4d]">&gt;</span> Sponsors
-        </h3>
-        
-        <div class="flex flex-wrap justify-center gap-6 mb-12">
-          <div class="bg-[#0f1623] border border-white/5 rounded-xl w-48 h-20 flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer">
-            <span class="text-2xl font-bold text-white">OpenAI</span>
-          </div>
-          <div class="bg-[#0f1623] border border-white/5 rounded-xl w-48 h-20 flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer">
-            <span class="text-2xl font-bold text-white flex items-center gap-2">
-              <span class="text-3xl">▲</span> Vercel
-            </span>
-          </div>
-          <div class="bg-[#0f1623] border border-white/5 rounded-xl w-48 h-20 flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer">
-            <span class="text-sm text-gray-400 mr-2">CI powered by</span>
-            <span class="text-xl font-bold text-white tracking-widest">BLACK<br/>SMITH</span>
-          </div>
-          <div class="bg-[#0f1623] border border-white/5 rounded-xl w-48 h-20 flex items-center justify-center hover:bg-white/5 transition-colors cursor-pointer">
-            <span class="text-3xl font-black text-white tracking-tighter">convex</span>
-          </div>
         </div>
       </div>
 
       <!-- Footer -->
       <footer class="mt-32 pb-16 text-center w-full max-w-3xl">
         <div class="flex justify-center gap-6 text-[#ff4d4d] text-sm mb-8">
-          <a href="#" class="hover:text-[#ff6b6b] transition-colors">Blog</a>
+          <a :href="withBase('/cn/adopt/chapter0')" class="hover:text-[#ff6b6b] transition-colors">领养龙虾</a>
           <span class="text-gray-600">•</span>
-          <a href="#" class="hover:text-[#ff6b6b] transition-colors">Showcase</a>
+          <a :href="withBase('/cn/build/')" class="hover:text-[#ff6b6b] transition-colors">构建龙虾</a>
           <span class="text-gray-600">•</span>
-          <a href="#" class="hover:text-[#ff6b6b] transition-colors">Shoutouts</a>
+          <a href="https://github.com/datawhalechina/hello-claw" target="_blank" rel="noreferrer" class="hover:text-[#ff6b6b] transition-colors">GitHub</a>
           <span class="text-gray-600">•</span>
-          <a href="#" class="hover:text-[#ff6b6b] transition-colors">Integrations</a>
-          <span class="text-gray-600">•</span>
-          <a href="#" class="hover:text-[#ff6b6b] transition-colors">Trust</a>
+          <a href="https://github.com/datawhalechina/hello-claw/issues" target="_blank" rel="noreferrer" class="hover:text-[#ff6b6b] transition-colors">提 Issue</a>
         </div>
         
         <p class="text-gray-400 text-sm mb-4">
-          Built by <span class="text-[#ff4d4d]">Molty 🦞</span>, a space lobster AI with a <span class="text-[#ff4d4d]">soul</span>, by <span class="text-[#ff4d4d]">Peter Steinberger</span> & <span class="text-[#ff4d4d]">community</span>.
+          由 <span class="text-[#ff4d4d]">Datawhale 社区</span>维护的 OpenClaw 学习教程：从领养到构建，循序渐进上手与进阶。
         </p>
         
         <p class="text-gray-600 text-xs">
-          Formerly known as Clawdbot and Moltbot. Independent project, not affiliated with Anthropic.
+          内容采用 <a class="text-[#ff4d4d] hover:text-[#ff6b6b] transition-colors" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a> 许可协议发布。
         </p>
       </footer>
     </div>
@@ -299,6 +295,33 @@ const copied = ref(false)
 const eyeOffsetX = ref(0)
 const eyeOffsetY = ref(0)
 
+const quickStartMode = ref('powershell')
+
+const quickStartPresets = {
+  powershell: {
+    label: 'Windows (PowerShell)',
+    command: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+iwr -useb https://openclaw.ai/install.ps1 | iex
+openclaw onboard --install-daemon`,
+  },
+  macos: {
+    label: 'macOS',
+    command: `brew install node@22
+npm install -g openclaw@latest
+openclaw onboard --install-daemon`,
+  },
+  linux: {
+    label: 'Linux / WSL2',
+    command: `curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+sudo apt install -y nodejs
+npm install -g openclaw@latest
+openclaw onboard --install-daemon`,
+  },
+}
+
+const quickStartLabel = computed(() => quickStartPresets[quickStartMode.value].label)
+const quickStartCommand = computed(() => quickStartPresets[quickStartMode.value].command)
+
 const stars = Array.from({ length: 100 }).map((_, i) => ({
   id: i,
   x: Math.random() * 100,
@@ -306,24 +329,6 @@ const stars = Array.from({ length: 100 }).map((_, i) => ({
   size: Math.random() * 2 + 0.5,
   opacity: Math.random() * 0.5 + 0.1,
 }))
-
-const integrations = [
-  { icon: '💬', name: 'WhatsApp' },
-  { icon: '✈️', name: 'Telegram' },
-  { icon: '👾', name: 'Discord' },
-  { icon: '#️⃣', name: 'Slack' },
-  { icon: '🔵', name: 'Signal' },
-  { icon: '💬', name: 'iMessage' },
-  { icon: '🤖', name: 'Claude' },
-  { icon: '🟩', name: 'GPT' },
-  { icon: '🎵', name: 'Spotify' },
-  { icon: '💡', name: 'Hue' },
-  { icon: '💎', name: 'Obsidian' },
-  { icon: '𝕏', name: 'Twitter' },
-  { icon: '🌐', name: 'Browser' },
-  { icon: '📧', name: 'Gmail' },
-  { icon: '🐙', name: 'GitHub' }
-]
 
 const baseRecommendedSections = [
   { track: '领养龙虾', title: '第 1 章：十分钟上手 OpenClaw', summary: '一键安装、配置模型、常用命令与 Coding Plan 模式。', link: '/cn/adopt/chapter1' },
@@ -351,8 +356,17 @@ const shuffle = (items) => {
 const recommendedSections = ref(shuffle(baseRecommendedSections))
 const tickerItems = computed(() => [...recommendedSections.value, ...recommendedSections.value])
 
+const quickLinks = [
+  { icon: '🦞', text: '领养：写在开头', link: '/cn/adopt/chapter0' },
+  { icon: '⚡', text: '领养：快速上手', link: '/cn/adopt/chapter1' },
+  { icon: '📱', text: '领养：移动端接入', link: '/cn/adopt/chapter3' },
+  { icon: '🛠️', text: '构建：写在开头', link: '/cn/build/' },
+  { icon: '📚', text: '附录：命令速查表', link: '/cn/appendix/appendix-a' },
+  { icon: '🐙', text: 'GitHub', link: 'https://github.com/datawhalechina/hello-claw', external: true },
+]
+
 const copyCommand = () => {
-  navigator.clipboard.writeText('curl -fsSL https://openclaw.ai/install.sh | bash')
+  navigator.clipboard.writeText(quickStartCommand.value)
   copied.value = true
   setTimeout(() => copied.value = false, 2000)
 }
