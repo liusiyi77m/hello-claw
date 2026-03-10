@@ -70,6 +70,15 @@ OpenClaw 需要 Node.js 22+ 运行环境。如果你已经装过，跳到[第 2 
 >
 >   </details>
 
+::: tip 用 Trae CN 当安装助手（更省事）
+如果你安装了 [Trae CN](https://www.trae.cn/)（字节跳动推出的免费 AI 编程助手），可以把它当作你的“本地安装/排障助手”，你只需要描述目标与当前报错即可。
+
+- 安装环境：`帮我安装 Node.js 22，并告诉我如何验证安装是否成功（我的系统是 Windows/macOS/Linux）`
+- 安装 OpenClaw：`帮我安装 openclaw@latest，并运行 openclaw --version 验证`
+- 解决问题：`我执行 openclaw onboard 报错了，错误信息如下：... 请定位原因并给出修复步骤`
+- 修改配置：`帮我打开并修改 openclaw.json，把模型 API Key 配好（Windows 路径是 C:\\Users\\用户名\\.openclaw\\openclaw.json；macOS/Linux 是 ~/.openclaw/openclaw.json）`
+:::
+
 ### 1.1 安装 Node.js
 
 > **什么是 Node.js？** OpenClaw 是用 JavaScript 编写的，Node.js 让它能在你的电脑上运行。你不需要学 JavaScript，装好就行。
@@ -128,9 +137,7 @@ WSL2（Windows Subsystem for Linux 2）让你在 Windows 上运行完整的 Linu
 
 </details>
 
-<details>
-<summary>国内镜像加速（下载太慢时使用）</summary>
-
+::: details 国内镜像加速（下载太慢时使用）
 **Linux / macOS / WSL2**：
 
 ```bash
@@ -148,21 +155,7 @@ npm config set registry https://registry.npmmirror.com
 nvm node_mirror https://npmmirror.com/mirrors/node
 npm config set registry https://registry.npmmirror.com
 ```
-
-</details>
-
-<details>
-<summary>使用 Trae CN 等 AI 编程助手辅助安装</summary>
-
-如果你安装了 [Trae CN](https://www.trae.cn/)（字节跳动推出的免费 AI 编程助手），可以直接让它帮你完成环境安装：
-
-1. 打开 Trae CN，新建对话
-2. 输入：「帮我安装 Node.js 22 和 OpenClaw，我的系统是 [Windows/macOS/Linux]」
-3. Trae CN 会生成并执行安装命令，你只需确认即可
-
-其他 AI 编程助手（如 Cursor、Windsurf）也可以用同样的方式辅助安装。
-
-</details>
+:::
 
 ### 1.2 安装 OpenClaw
 
