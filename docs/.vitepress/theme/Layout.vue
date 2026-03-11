@@ -60,7 +60,7 @@
 
         <div class="flex flex-col sm:flex-row items-center gap-4 mb-12">
           <a
-            :href="withBase('/cn/adopt/chapter0')"
+            :href="withBase('/cn/adopt/intro')"
             class="w-full sm:w-auto group flex items-center justify-center gap-2 bg-[#ff4d4d] hover:bg-[#ff6b6b] text-white font-bold rounded-full py-3 px-7 transition-all duration-300 hover:scale-105 active:scale-95"
           >
             领养龙虾 <span class="opacity-80 group-hover:opacity-100 transition-opacity">→</span>
@@ -102,8 +102,8 @@
           <h3 class="!text-3xl md:!text-4xl !font-extrabold !leading-tight flex items-center gap-2">
             <span class="text-[#ff4d4d]">&gt;</span> 推荐章节
           </h3>
-          <a :href="withBase('/cn/adopt/chapter0')" class="text-[#ff4d4d] hover:text-[#ff6b6b] text-sm font-medium flex items-center gap-1 transition-colors">
-            从第 0 章开始 <span>→</span>
+          <a :href="withBase('/cn/adopt/intro')" class="text-[#ff4d4d] hover:text-[#ff6b6b] text-sm font-medium flex items-center gap-1 transition-colors">
+            从「写在开头」开始 <span>→</span>
           </a>
         </div>
 
@@ -254,7 +254,7 @@
         </div>
         
         <div class="flex items-center gap-6 text-[#ff4d4d] text-sm font-medium">
-          <a :href="withBase('/cn/adopt/chapter0')" class="hover:text-[#ff6b6b] transition-colors flex items-center gap-1">
+          <a :href="withBase('/cn/adopt/intro')" class="hover:text-[#ff6b6b] transition-colors flex items-center gap-1">
             从「写在开头」开始 <span>→</span>
           </a>
           <span class="text-gray-600">•</span>
@@ -267,7 +267,7 @@
       <!-- Footer -->
       <footer class="mt-32 pb-16 text-center w-full max-w-3xl">
         <div class="flex justify-center gap-6 text-[#ff4d4d] text-sm mb-8">
-          <a :href="withBase('/cn/adopt/chapter0')" class="hover:text-[#ff6b6b] transition-colors">领养龙虾</a>
+          <a :href="withBase('/cn/adopt/intro')" class="hover:text-[#ff6b6b] transition-colors">领养龙虾</a>
           <span class="text-gray-600">•</span>
           <a :href="withBase('/cn/adopt/lobster-university')" class="hover:text-[#ff6b6b] transition-colors">🎓 龙虾大学</a>
           <span class="text-gray-600">•</span>
@@ -309,7 +309,7 @@
           <a href="https://github.com/VoltAgent/awesome-openclaw-skills" target="_blank" rel="noreferrer" class="w-full sm:w-auto group flex items-center justify-center gap-2 bg-[#0f1623] hover:bg-white/10 border border-[#ff4d4d]/30 text-white font-bold rounded-full py-3 px-7 transition-all duration-300 hover:scale-105 active:scale-95">
             5494+ 分类清单 <span class="text-[#ff4d4d] group-hover:text-[#ff6b6b] transition-colors">→</span>
           </a>
-          <a :href="withBase('/cn/adopt/chapter0')" class="w-full sm:w-auto group flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-full py-3 px-7 transition-all duration-300 hover:scale-105 active:scale-95">
+          <a :href="withBase('/cn/adopt/intro')" class="w-full sm:w-auto group flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-full py-3 px-7 transition-all duration-300 hover:scale-105 active:scale-95">
             领养龙虾 <span class="text-[#ff4d4d] group-hover:text-[#ff6b6b] transition-colors">→</span>
           </a>
           <a :href="withBase('/cn/build/')" class="w-full sm:w-auto group flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-full py-3 px-7 transition-all duration-300 hover:scale-105 active:scale-95">
@@ -508,7 +508,7 @@ const recommendedSections = ref(shuffle(baseRecommendedSections))
 const tickerItems = computed(() => [...recommendedSections.value, ...recommendedSections.value])
 
 const quickLinks = [
-  { icon: '🦞', text: '领养：写在开头', link: '/cn/adopt/chapter0' },
+  { icon: '🦞', text: '领养：写在开头', link: '/cn/adopt/intro' },
   { icon: '⚡', text: '领养：快速上手', link: '/cn/adopt/chapter1' },
   { icon: '🎓', text: '领养：龙虾大学', link: '/cn/adopt/lobster-university' },
   { icon: '📱', text: '领养：移动端接入', link: '/cn/adopt/chapter3' },
