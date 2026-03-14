@@ -443,7 +443,7 @@ openclaw onboard \
 
 **Q1：向导配置的文件存在哪里？**
 
-主配置文件在 `~/.openclaw/openclaw.json`，工作区文件在 `~/.openclaw/workspace/`。详见[附录 G：配置文件详解](/cn/appendix/appendix-g)。
+运行 `openclaw onboard` 后，系统会自动生成主配置文件 `~/.openclaw/openclaw.json`，你不需要手动创建。工作区文件在 `~/.openclaw/workspace/`。配置项详解见[附录 G：配置文件详解](/cn/appendix/appendix-g)。
 
 **Q2：跑完向导后最快的方式开始聊天是什么？**
 

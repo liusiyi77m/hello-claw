@@ -108,21 +108,10 @@ ss -tlnp | grep 18789
 
 ### 2.2 检查认证配置
 
+确保 Gateway 认证已开启：
+
 ```bash
-# 查看 OpenClaw 配置中的认证设置
 openclaw config set gateway.auth.enabled true
-```
-
-确认你的 `openclaw.json` 中包含认证配置：
-
-```json
-{
-  "gateway": {
-    "auth": {
-      "enabled": true
-    }
-  }
-}
 ```
 
 ### 2.3 检查 Skill 来源

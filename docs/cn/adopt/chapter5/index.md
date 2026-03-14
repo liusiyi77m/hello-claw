@@ -33,7 +33,26 @@ OpenClaw 本身不包含 AI 大脑——它需要连接一个**模型提供商**
 
 ### 最简配置
 
-编辑 `~/.openclaw/openclaw.json`（Windows：`C:\Users\你的用户名\.openclaw\openclaw.json`）：
+一条命令设置默认模型：
+
+```bash
+openclaw config set agents.defaults.model.primary "anthropic/claude-opus-4-6"
+```
+
+### 用向导配置（推荐新手）
+
+更喜欢交互式引导？运行向导即可：
+
+```bash
+openclaw onboard
+```
+
+向导会引导你选择提供商、输入 API Key、设置默认模型——和[第二章](/cn/adopt/chapter2/#_2-配置-ai-模型)的流程一样。
+
+<details>
+<summary>手动编辑配置文件</summary>
+
+你也可以直接编辑 `~/.openclaw/openclaw.json`（Windows：`C:\Users\你的用户名\.openclaw\openclaw.json`）：
 
 ```json5
 {
@@ -47,21 +66,9 @@ OpenClaw 本身不包含 AI 大脑——它需要连接一个**模型提供商**
 }
 ```
 
-保存后重启网关生效：
+保存后大部分配置会自动生效（详见[第八章 配置热更新](/cn/adopt/chapter8/#配置热更新)）。
 
-```bash
-openclaw gateway restart
-```
-
-### 用向导配置（推荐新手）
-
-不想手动编辑配置文件？运行向导即可：
-
-```bash
-openclaw onboard
-```
-
-向导会引导你选择提供商、输入 API Key、设置默认模型——和[第二章](/cn/adopt/chapter2/#_2-配置-ai-模型)的流程一样。
+</details>
 
 ---
 

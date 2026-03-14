@@ -267,7 +267,7 @@ OpenRouter 上带 `:free` 后缀的模型完全免费，如 `stepfun/step-3.5-fl
 
 > **更多提供商**：OpenClaw 支持 15+ 模型提供商（DeepSeek、Qwen、Kimi、GLM、OpenAI、Claude 等），完整列表及获取地址见[附录 E 模型提供商选型指南](/cn/appendix/appendix-e)。
 
-> **想跳过向导、手动编辑配置文件？** 参考[附录 G 配置文件详解](/cn/appendix/appendix-g)。配置文件路径：`~/.openclaw/openclaw.json`（Windows：`C:\Users\你的用户名\.openclaw\openclaw.json`），修改后运行 `openclaw gateway restart` 生效。
+> **想跳过向导、手动编辑配置文件？** 向导会自动生成 `~/.openclaw/openclaw.json`，你也可以直接编辑它，详见[附录 G 配置文件详解](/cn/appendix/appendix-g)。
 
 ## 3. 验证与首次对话
 

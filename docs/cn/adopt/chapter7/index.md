@@ -431,9 +431,26 @@ exec 工具有三种安全级别：
 
 ### 7.1 允许 / 禁止特定工具
 
-通过 `tools.allow` 和 `tools.deny` 精确控制。编辑 `~/.openclaw/openclaw.json`：
+通过 `tools.allow` 和 `tools.deny` 精确控制：
 
 **禁止浏览器**：
+
+```bash
+openclaw config set tools.deny '["browser"]'
+```
+
+**只允许文件操作和搜索**：
+
+```bash
+openclaw config set tools.allow '["group:fs", "group:web"]'
+```
+
+> **规则**：`deny` 优先于 `allow`。匹配不区分大小写，支持 `*` 通配符（`"*"` 表示所有工具）。
+
+<details>
+<summary>手动编辑配置文件</summary>
+
+编辑 `~/.openclaw/openclaw.json`：
 
 ```json
 {
@@ -443,7 +460,7 @@ exec 工具有三种安全级别：
 }
 ```
 
-**只允许文件操作和搜索**：
+或：
 
 ```json
 {
@@ -453,9 +470,7 @@ exec 工具有三种安全级别：
 }
 ```
 
-> **规则**：`deny` 优先于 `allow`。匹配不区分大小写，支持 `*` 通配符（`"*"` 表示所有工具）。
-
-修改后运行 `openclaw gateway restart` 生效。
+</details>
 
 <details>
 <summary>按模型提供商限制工具</summary>
