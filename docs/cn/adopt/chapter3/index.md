@@ -287,7 +287,7 @@ macOS 应用会请求以下 TCC 权限：
 每个 Custom Provider 通过 **Endpoint ID** 区分，所以你可以同时配置多个自定义端点：
 
 ```json
-// openclaw.json 示例
+// 配置示例
 {
   "models": {
     "providers": {
@@ -401,7 +401,7 @@ openclaw onboard \
 
 **Q：配置文件存在哪里？**
 
-`~/.openclaw/openclaw.json`，工作区在 `~/.openclaw/workspace/`。详见[附录 G](/cn/appendix/appendix-g)。
+配置文件存储在 `~/.openclaw/` 目录下，工作区在 `~/.openclaw/workspace/`。配置文件结构详见[附录 G](/cn/appendix/appendix-g)。
 
 **Q：向导跑完，怎么马上开始聊天？**
 

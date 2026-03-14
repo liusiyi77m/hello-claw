@@ -292,10 +292,10 @@
         </div>
       </div>
 
-      <!-- Quick Start Section -->
+      <!-- 一键安装 -->
       <div v-fade-in class="w-full max-w-5xl mt-32">
         <h3 class="!text-3xl md:!text-4xl !font-extrabold !leading-tight flex items-center gap-2 mb-8">
-          <span class="text-[#ff4d4d]">&gt;</span> Quick Start
+          <span class="text-[#ff4d4d]">&gt;</span> 一键安装
         </h3>
         
         <div class="bg-[#0f1623] border border-white/5 rounded-2xl overflow-hidden shadow-xl">

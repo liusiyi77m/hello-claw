@@ -463,7 +463,7 @@ openclaw message unpin                # 取消置顶
 
 ## 配置操作
 
-OpenClaw 的配置存储在 `openclaw.json` 中，可以通过 CLI 直接读写。
+OpenClaw 的配置可以通过 CLI 直接读写（配置文件结构详见[附录 G](/cn/appendix/appendix-g)）。
 
 ```bash
 openclaw config get <path>           # 读取配置项

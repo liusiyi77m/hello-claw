@@ -45,7 +45,7 @@ openclaw dashboard
 
 | 功能区 | 说明 |
 |--------|------|
-| **Config** | 可视化编辑 `openclaw.json`，保存即生效 |
+| **Config** | 可视化编辑配置，保存即生效 |
 | **Conversations** | 查看对话历史、消息详情、工具调用记录 |
 | **Channels** | 查看已连接渠道的状态 |
 | **Sessions** | 管理活跃会话和上下文 |
@@ -53,7 +53,7 @@ openclaw dashboard
 | **Cron** | 查看和管理定时任务 |
 | **Logs** | 实时查看 Gateway 日志流 |
 
-Config 标签页的编辑器修改的就是 `~/.openclaw/openclaw.json`，和 `openclaw config set <key> <value>` 效果完全一样（详见[第八章 配置管理](/cn/adopt/chapter8/#_2-配置管理)）。
+Config 标签页提供可视化配置编辑器，和 `openclaw config set <key> <value>` 效果完全一样（详见[第八章 配置管理](/cn/adopt/chapter8/#_2-配置管理)）。
 
 </details>
 

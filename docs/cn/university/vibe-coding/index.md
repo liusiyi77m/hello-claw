@@ -670,35 +670,3 @@ Vibe Coding 的核心价值是**把开发者从繁琐的工具操作中解放出
 3. **技术债清理机器人**：每周自动扫描 `TODO`/`FIXME`/`HACK` 注释，按优先级创建 Issue 并关联代码位置
 4. **依赖更新巡检**：定时检查 `npm outdated` / `pip list --outdated`，自动创建升级 PR 并跑 CI
 5. **文档同步守卫**：监控代码变更，当 API 接口签名变化时自动更新对应的 API 文档并提 PR
-
-欢迎大家在实践中探索新的玩法，并反馈到 [hello-claw](https://github.com/datawhalechina/hello-claw)！
-
----
-
-**下一步**：[技能实战：首页](/cn/university/)
-
-## 附录：推荐工具与资源清单
-
-### Claude Code
-- [claude-code ClawHub 技能（OpenClaw 集成）](https://clawhub.ai/hw10181913/claude-code)
-- [Claude Code 官方文档](https://docs.anthropic.com/en/docs/claude-code)
-- [Anthropic Console（API Key 管理）](https://console.anthropic.com/)
-- [Claude Code Agent SDK（编程集成）](https://www.npmjs.com/package/@anthropic-ai/claude-code)
-
-### GitHub 配置
-- [创建 Fine-grained Personal Access Token](https://github.com/settings/tokens?type=beta)
-- [GitHub CLI（gh）安装指南](https://cli.github.com/)
-- [GitHub Copilot Code Review 文档](https://docs.github.com/en/copilot/using-github-copilot/code-review/using-copilot-code-review)
-- [分支保护规则配置](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-a-branch-protection-rule)
-
-### PR 模板参考
-- [Conventional Commits 规范](https://www.conventionalcommits.org/)
-- [GitHub PR 模板指南](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests)
-
-### OpenClaw 相关
-- [ClawHub 原版（技能搜索）](https://clawhub.ai/)
-- [中文 ClawHub（腾讯 SkillHub）](https://skillhub.tencent.com/#categories)
-- [第七章 工具与定时任务（工具配置档）](/cn/adopt/chapter7/)
-- [第四章 聊天平台接入（飞书配置）](/cn/adopt/chapter4/)
-- [第十章 安全防护与威胁模型](/cn/adopt/chapter10/)
-- [附录 D 技能开发与发布指南](/cn/appendix/appendix-d)
