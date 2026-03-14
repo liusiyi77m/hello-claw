@@ -348,9 +348,6 @@
             </div>
           </div>
         </div>
-        <p class="text-center text-gray-500 text-sm mt-4">
-          以上命令来自本教程「第 1 章」的安装步骤，按你的系统选择即可。
-        </p>
       </div>
 
       <!-- What It Does Section -->
