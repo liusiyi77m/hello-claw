@@ -191,7 +191,8 @@ export default defineConfig({
               items: [
                 { text: '🎓 龙虾大学：首页', link: '/cn/university/' },
                 { text: '🧪 龙虾大学：金融实战', link: '/cn/university/finance' },
-                { text: '🧪 龙虾大学：邮件提醒实战', link: '/cn/university/email-reminder' }
+                { text: '🧪 龙虾大学：邮件提醒实战', link: '/cn/university/email-reminder' },
+                { text: '🧪 龙虾大学：Vibe Coding 实战', link: '/cn/university/vibe-coding' }
               ]
             }
           ]
