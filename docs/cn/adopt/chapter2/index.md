@@ -328,25 +328,372 @@ A: 可能是模型响应慢，尝试换一个更快的模型（如 `deepseek-ai/
 
 A: 可能是网络问题。可以尝试使用代理，或者多试几次。如果始终无法下载，可以手动访问 `https://openclaw.ai/install.sh`（或 `.ps1`）保存到本地后执行。
 
+## 5. 版本升级与维护
+
+OpenClaw 发展迅速（尚未到 "1.0"），建议定期更新。升级流程：**更新 → 运行检查 → 重启 → 验证**。
+
+### 推荐：重新运行安装脚本（原地升级）
+
+首选的更新方式是重新运行官网安装脚本。它会检测现有安装、原地升级，并在需要时自动运行 `openclaw doctor`：
+
+```bash
+curl -fsSL https://openclaw.ai/install.sh | bash
+```
+
+> - 不想再次运行新手引导向导？添加 `--no-onboard`
+> - 源码安装的用户：`curl -fsSL https://openclaw.ai/install.sh | bash -s -- --install-method git --no-onboard`
+> - 安装脚本底层使用 `npm install -g openclaw@latest`（全局安装）
+> - 安装脚本仅在仓库干净时才会执行 `git pull --rebase`（源码安装）
+
+### 更新前准备
+
+升级前，先确认三件事：
+
+| 确认项 | 命令 / 路径 |
+|--------|------------|
+| 安装方式（全局 npm/pnpm 还是源码 git clone） | `openclaw --version` |
+| Gateway 运行方式（前台终端还是 launchd/systemd 服务） | `openclaw gateway status` |
+| 备份定制内容 | 配置 `~/.openclaw/openclaw.json`、凭证 `~/.openclaw/credentials/`、工作区 `~/.openclaw/workspace/` |
+
 <details>
-<summary>如何卸载 OpenClaw</summary>
+<summary>更新方式一：全局安装（npm/pnpm）</summary>
+
+```bash
+# 选择你的包管理器
+npm i -g openclaw@latest
+# 或
+pnpm add -g openclaw@latest
+```
+
+> 我们**不推荐**将 Bun 用于 Gateway 运行时（WhatsApp/Telegram 有已知 bug）。
+
+切换更新渠道：
+
+```bash
+openclaw update --channel beta    # 尝鲜版
+openclaw update --channel dev     # 开发版
+openclaw update --channel stable  # 稳定版（默认）
+```
+
+> 使用 `--tag <dist-tag|version>` 可一次性安装指定版本。npm 安装的 Gateway 启动时会记录更新提示，可通过 `update.checkOnStart: false` 禁用。
+
+更新后必须运行：
+
+```bash
+openclaw doctor           # 迁移配置 + 健康检查
+openclaw gateway restart  # 重启网关（优于杀死 PID）
+openclaw health           # 验证一切正常
+```
+
+</details>
+
+<details>
+<summary>更新方式二：openclaw update（源码安装首选）</summary>
+
+源码安装（git checkout）用户首选：
+
+```bash
+openclaw update
+```
+
+它执行一套安全的更新流程：
+1. 检查工作树是否干净（有未提交更改时拒绝更新）
+2. 切换到选定的渠道（标签或分支）
+3. 获取并 rebase 到上游
+4. 安装依赖、构建、构建控制 UI
+5. 运行 `openclaw doctor`
+6. 默认重启 Gateway（使用 `--no-restart` 跳过）
+
+> 如果你通过 npm/pnpm 安装（没有 git 元数据），`openclaw update` 会尝试通过你的包管理器更新。如果无法检测到安装方式，请改用全局安装方式。
+
+</details>
+
+<details>
+<summary>更新方式三：从源码手动更新</summary>
+
+如果你从仓库 checkout 运行，手动更新步骤：
+
+```bash
+git pull
+pnpm install
+pnpm build
+pnpm ui:build    # 首次运行时自动安装 UI 依赖
+openclaw doctor
+openclaw health
+```
+
+> - 运行打包的 `openclaw` 二进制文件时，`pnpm build` 很重要
+> - 如果直接从 TypeScript 运行（`pnpm openclaw ...`），通常不需要重新构建，但配置迁移仍需运行 `doctor`
+> - 在全局和 git 安装之间切换很容易：安装另一种方式，然后运行 `openclaw doctor`，它会将 Gateway 服务入口重写为当前安装
+
+</details>
+
+<details>
+<summary>更新方式四：控制 UI / RPC</summary>
+
+控制 UI 提供"更新并重启"功能（RPC：`update.run`）。它：
+1. 运行与 `openclaw update` 相同的源码更新流程（仅限 git checkout）
+2. 写入带有结构化报告的重启哨兵
+3. 重启 Gateway 并向最后活跃的会话 ping 报告
+
+> 如果 rebase 失败，Gateway 会中止并在不应用更新的情况下重启。
+
+</details>
+
+### 始终运行：openclaw doctor
+
+`doctor` 是"安全更新"命令——修复 + 迁移 + 警告，每次更新后必须运行：
+
+```bash
+openclaw doctor
+```
+
+<details>
+<summary>doctor 做了什么？</summary>
+
+- 迁移已弃用的配置键和旧版配置文件位置
+- 审计私信策略并对有风险的"开放"设置发出警告
+- 检查 Gateway 健康状况，提供重启选项
+- 检测并将旧版 Gateway 服务（launchd/systemd）迁移到当前版本
+- 在 Linux 上确保 systemd 用户 lingering（Gateway 登出后仍存活）
+
+> 源码安装时，`openclaw doctor` 会提示先运行 `openclaw update`。
+
+</details>
+
+### 回滚 / 固定版本
+
+<details>
+<summary>全局安装回滚</summary>
+
+安装已知良好的版本：
+
+```bash
+# 查看当前发布版本
+npm view openclaw version
+
+# 安装指定版本（替换 <version>）
+npm i -g openclaw@<version>
+# 或
+pnpm add -g openclaw@<version>
+
+# 重启 + 检查
+openclaw doctor
+openclaw gateway restart
+```
+
+</details>
+
+<details>
+<summary>源码安装按日期回滚</summary>
+
+回退到某个日期的提交（示例：2026-01-01）：
+
+```bash
+git fetch origin
+git checkout "$(git rev-list -n 1 --before=\"2026-01-01\" origin/main)"
+pnpm install
+pnpm build
+openclaw gateway restart
+```
+
+回到最新版本：
+
+```bash
+git checkout main
+git pull
+```
+
+</details>
+
+### 启动 / 停止 / 重启 Gateway
+
+```bash
+openclaw gateway status    # 查看状态
+openclaw gateway stop      # 停止
+openclaw gateway restart   # 重启（应用配置变更）
+openclaw gateway --port 18789  # 指定端口启动
+openclaw logs --follow     # 实时查看日志
+```
+
+<details>
+<summary>受管理服务（launchd / systemd）</summary>
+
+```bash
+# macOS launchd
+launchctl kickstart -k gui/$UID/bot.molt.gateway
+
+# Linux systemd 用户服务
+systemctl --user restart openclaw-gateway.service
+
+# Windows (WSL2)
+systemctl --user restart openclaw-gateway.service
+```
+
+> `launchctl`/`systemctl` 仅在服务已安装时有效，否则运行 `openclaw gateway install`。
+
+</details>
+
+> 如果更新后卡住了：再次运行 `openclaw doctor` 并仔细阅读输出（它通常会告诉你修复方法）。社区求助：[Discord](https://discord.gg/clawd)
+
+---
+
+## 6. 卸载
+
+### 简单方式（推荐）
 
 ```bash
 # 交互式卸载（推荐）
 openclaw uninstall
 
-# 完全卸载（非交互式，适用于自动化）
-openclaw uninstall --all --yes
+# 非交互式（适用于自动化 / npx）
+openclaw uninstall --all --yes --non-interactive
+npx -y openclaw uninstall --all --yes --non-interactive
 ```
 
-如果 CLI 已删除但服务仍在运行，手动清理：
+<details>
+<summary>手动卸载步骤（效果相同）</summary>
 
 ```bash
-openclaw gateway stop        # 停止网关服务
-openclaw gateway uninstall   # 卸载系统服务
-rm -rf ~/.openclaw           # 删除配置和状态数据
+# 1. 停止 Gateway 服务
+openclaw gateway stop
+
+# 2. 卸载 Gateway 服务（launchd/systemd/schtasks）
+openclaw gateway uninstall
+
+# 3. 删除状态 + 配置
+rm -rf "${OPENCLAW_STATE_DIR:-$HOME/.openclaw}"
+
+# 4. 删除工作区（可选）
+rm -rf ~/.openclaw/workspace
+
+# 5. 移除 CLI（选择你使用的包管理器）
+npm rm -g openclaw
+# 或 pnpm remove -g openclaw
+# 或 bun remove -g openclaw
+
+# 6. macOS 应用（如有）
+rm -rf /Applications/OpenClaw.app
 ```
 
+> - 如果使用了配置文件（`--profile`），对每个 `~/.openclaw-<profile>` 重复步骤 3
+> - 远程模式下，状态目录在 Gateway 主机上，需在远程服务器执行
+> - 如果 `OPENCLAW_CONFIG_PATH` 设为自定义位置，也需手动删除
+
+</details>
+
+<details>
+<summary>手动服务移除（CLI 已删除但服务仍在运行）</summary>
+
+**macOS（launchd）：**
+
+```bash
+launchctl bootout gui/$UID/bot.molt.gateway
+rm -f ~/Library/LaunchAgents/bot.molt.gateway.plist
+```
+
+> 如果存在旧版 `com.openclaw.*` plist，也请移除。使用了配置文件时，替换标签为 `bot.molt.<profile>`。
+
+**Linux（systemd 用户单元）：**
+
+```bash
+systemctl --user disable --now openclaw-gateway.service
+rm -f ~/.config/systemd/user/openclaw-gateway.service
+systemctl --user daemon-reload
+```
+
+**Windows（计划任务）：**
+
+```powershell
+schtasks /Delete /F /TN "OpenClaw Gateway"
+Remove-Item -Force "$env:USERPROFILE\.openclaw\gateway.cmd"
+```
+
+> 使用了配置文件时，删除匹配的任务名称和 `~\.openclaw-<profile>\gateway.cmd`。
+
+</details>
+
 > **注意**：卸载前建议备份你的 workspace 目录（`~/.openclaw/workspace`），其中包含对话历史、记忆文件等重要数据。
+
+---
+
+## 7. 迁移到新机器
+
+将 OpenClaw Gateway 从一台机器迁移到另一台，无需重新进行新手引导。核心思路：**复制状态目录 + 工作区 → 安装 → doctor → 重启**。
+
+### 迁移前：确认你要迁移什么
+
+| 项目 | 默认路径 | 包含内容 |
+|------|---------|---------|
+| **状态目录** | `~/.openclaw/`（使用 `--profile` 时为 `~/.openclaw-<profile>/`） | 配置、凭证、API 密钥、OAuth 令牌、会话历史、渠道状态 |
+| **工作区** | `~/.openclaw/workspace/` | MEMORY.md、USER.md、Skills 笔记等智能体文件 |
+
+> 不确定状态目录在哪？在旧机器上运行 `openclaw status`，查找 `OPENCLAW_STATE_DIR` 的提示。
+
+**两者都复制** = 完整迁移（保留配置、凭证、会话、渠道登录、工作区）。**只复制工作区**（如通过 Git）= 不保留会话、凭证和渠道登录。
+
+### 迁移步骤
+
+**步骤 0 — 备份（旧机器）**
+
+```bash
+# 停止 Gateway，防止复制时文件变化
+openclaw gateway stop
+
+# 归档状态目录和工作区
+cd ~
+tar -czf openclaw-state.tgz .openclaw
+tar -czf openclaw-workspace.tgz .openclaw/workspace
+```
+
+> 如果有多个配置文件（如 `~/.openclaw-main`、`~/.openclaw-work`），分别归档。
+
+**步骤 1 — 在新机器上安装 OpenClaw**
+
+按[第 1 步](#_1-安装)安装 CLI。如果新手引导创建了新的 `~/.openclaw/` 没关系——下一步会覆盖它。
+
+**步骤 2 — 复制状态目录 + 工作区到新机器**
+
+通过 `scp`、`rsync -a` 或外部驱动器复制。确保：
+- 包含隐藏目录（`.openclaw/`）
+- 文件所有权正确（运行 Gateway 的用户拥有）
+
+**步骤 3 — 运行 Doctor + 重启**
+
+```bash
+openclaw doctor          # 修复服务、应用配置迁移、警告不匹配
+openclaw gateway restart
+openclaw status          # 确认 Gateway 正在运行
+```
+
+### 验证检查清单
+
+- [ ] `openclaw status` 显示 Gateway 正在运行
+- [ ] 渠道仍然连接（如 WhatsApp 不需要重新配对）
+- [ ] Dashboard 打开并显示现有会话
+- [ ] 工作区文件（记忆、配置）存在
+
+<details>
+<summary>常见陷阱与解决方法</summary>
+
+**配置文件/状态目录不匹配：**
+
+如果旧 Gateway 使用了 `--profile` 或 `OPENCLAW_STATE_DIR`，而新 Gateway 用了不同配置，会出现配置不生效、渠道丢失、会话为空等症状。修复：用迁移的相同配置文件运行 Gateway，然后 `openclaw doctor`。
+
+**只复制了 openclaw.json：**
+
+`openclaw.json` 不够。许多提供商在 `$OPENCLAW_STATE_DIR/credentials/` 和 `$OPENCLAW_STATE_DIR/agents/<agentId>/` 下存储状态。始终迁移整个 `$OPENCLAW_STATE_DIR` 文件夹。
+
+**权限/所有权问题：**
+
+以 root 身份复制或更换了用户后，Gateway 可能无法读取凭证/会话。修复：确保状态目录 + 工作区由运行 Gateway 的用户拥有。
+
+**在远程/本地模式之间迁移：**
+
+如果你的 UI 指向远程 Gateway，远程主机拥有会话和工作区。迁移笔记本电脑不会移动远程 Gateway 的状态——需要迁移 Gateway 主机本身。
+
+**备份中的密钥安全：**
+
+`$OPENCLAW_STATE_DIR` 包含 API 密钥、OAuth 令牌、WhatsApp 凭证等敏感信息。将备份视为生产密钥：加密存储、避免不安全渠道传输、怀疑泄露时轮换密钥。
 
 </details>
