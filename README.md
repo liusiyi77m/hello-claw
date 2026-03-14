@@ -35,10 +35,11 @@
 
 本项目是一个面向 OpenClaw 的完整学习教程，帮助你从零开始掌握这个强大的命令行 AI 助理系统。无论你是想快速上手使用 OpenClaw 提升效率，还是想深入理解其原理并构建自己的版本，本教程都能为你提供清晰的学习路径。
 
-**本项目包含两大核心模块：**
+**本项目包含三大核心模块：**
 
 1. **领养 Claw（使用篇）**：11 章 + 7 个附录，安装（Ch1-3）+ 核心配置（Ch4-6）+ 扩展运维（Ch7-9）+ 安全与客户端（Ch10-11），按需选读
 2. **构建 Claw（开发篇）**：10 章，从拆解 OpenClaw 源码到分析替代方案，深入理解 Agent 架构
+3. **龙虾大学（场景实战篇）**：围绕 Skills 选型与典型工作流，给出可直接复用的实战案例
 
 **谁适合学习：**
 
@@ -113,6 +114,18 @@ https://datawhalechina.github.io/hello-claw
 | 第 8 章 轻量化方案 | NanoClaw、Nanobot、ZeroClaw 等社区变体 | ✅ |
 | 第 9 章 安全加固方案 | IronClaw 安全架构、沙箱隔离与审计日志 | ✅ |
 | 第 10 章 硬件方案 | PicoClaw 硬件选型、低功耗嵌入式部署 | ✅ |
+
+---
+
+### 第三部分：龙虾大学（场景实战篇）
+
+| 文章 | 简介 | 状态 |
+| ---- | ---- | ---- |
+| [龙虾大学首页（Skills 选修指南）](./docs/cn/university/index.md) | ClawHub 与 SkillHub 双入口、技能分类地图、选课原则与推荐课表 | ✅ |
+| [Vibe Coding 实战](./docs/cn/university/vibe-coding.md) | 飞书对话驱动需求到 PR，全流程“对话即开发”闭环 | ✅ |
+| [邮箱助手实战（163）](./docs/cn/university/email-assistant/index.md) | 从 IMAP/SMTP 配置到脚本验证与 cron 定时，跑通邮件自动化 | ✅ |
+| [多智能体协作（Multi OpenClaw / HiClaw）](./docs/cn/university/multi-claw-hiclaw/index.md) | 从单 Worker 瓶颈到多智能体协作，落地可追踪的任务编排 | ✅ |
+| [金融简报实战](./docs/cn/university/finance.md) | 多源信息聚合 + 结构化输出 + 定时分发，构建盘前/周报金融助理 | ✅ |
 
 ---
 

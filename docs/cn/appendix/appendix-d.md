@@ -402,7 +402,7 @@ my-skill/
 
 点击页面顶部的 **"Publish"** 按钮，进入技能发布界面：
 
-![ClawHub 技能发布界面](/clawhub-publish-skill.png)
+![ClawHub 技能发布界面](./images/clawhub-publish-skill.png)
 
 **3. 填写发布信息**
 

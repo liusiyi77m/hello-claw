@@ -17,7 +17,7 @@ next:
 
 **Onboarding（配置向导）** 帮你告诉龙虾三件事：用哪个模型、通过哪个渠道联系你、在哪里工作。OpenClaw 提供两条路径：
 
-![OpenClaw Onboarding](/OpenClaw-Onboarding.png)
+![OpenClaw Onboarding](./images/OpenClaw-Onboarding.png)
 
 ```mermaid
 flowchart TB
@@ -423,4 +423,3 @@ openclaw dashboard   # 浏览器 Dashboard（无需渠道配置）
 **Q：重新运行向导会覆盖现有配置吗？**
 
 不会，除非你传入 `--reset` 参数。
-

@@ -38,7 +38,7 @@ openclaw dashboard
 
 浏览器自动打开 `http://localhost:18789`，没自动打开就手动输入这个地址。
 
-![Web 控制面板浏览器界面](/openclaw-dashboard-browser.png)
+![Web 控制面板浏览器界面](./images/openclaw-dashboard-browser.png)
 
 <details>
 <summary>Dashboard 各功能区一览</summary>

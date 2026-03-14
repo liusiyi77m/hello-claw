@@ -42,7 +42,7 @@ openclaw status           # 查看整体运行状态
 <details>
 <summary>Gateway 架构详解（连接协议、节点系统）</summary>
 
-![OpenClaw Gateway 架构](/OpenClaw-Gateway.png)
+![OpenClaw Gateway 架构](./images/OpenClaw-Gateway.png)
 
 ```mermaid
 flowchart LR

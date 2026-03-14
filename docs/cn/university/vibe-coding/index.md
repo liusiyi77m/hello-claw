@@ -32,7 +32,7 @@ Vibe Coding 的核心理念是**用对话代替编码**：你只负责"想清楚
 
 ### 核心架构
 
-![Vibe Coding 工作流架构](/lark-vibe-coding-workflow.png)
+![Vibe Coding 工作流架构](./images/lark-vibe-coding-workflow.png)
 
 ```mermaid
 flowchart TB
@@ -324,19 +324,19 @@ openclaw doctor           # OpenClaw 整体健康
 
 **① 发送需求**：在飞书里用自然语言描述任务，机器人自动检查历史状态后开始执行。
 
-![用户在飞书发送代码需求](/lark-vibe-coding-requirement-1.png)
+![用户在飞书发送代码需求](./images/lark-vibe-coding-requirement-1.png)
 
 **② 收到 PR 摘要**：机器人完成后回传 PR 编号、状态、修改文件和添加详情。飞书里的 PR 链接可以直接点击跳转 GitHub。
 
-![机器人回传 PR 摘要与链接](/lark-vibe-coding-requirement-2.png)
+![机器人回传 PR 摘要与链接](./images/lark-vibe-coding-requirement-2.png)
 
 **③ 审查 diff**：点击 PR 链接在手机浏览器里查看代码变更，确认修改内容是否符合预期。
 
-![GitHub PR 页面的文件 diff 视图](/lark-vibe-coding-requirement-3.png)
+![GitHub PR 页面的文件 diff 视图](./images/lark-vibe-coding-requirement-3.png)
 
 **④ 确认合并**：回到飞书说一句"合并并清理分支"，机器人执行 merge + 删除分支，全程完成。
 
-![用户确认合并，机器人执行并汇报结果](/lark-vibe-coding-requirement-4.png)
+![用户确认合并，机器人执行并汇报结果](./images/lark-vibe-coding-requirement-4.png)
 
 到这里为止，分支前缀、Copilot 审查、结果回传格式都应该由 `IDENTITY.md` 自动兜底；后面示例默认都沿用这套规则，除非我明确写"这次要覆盖默认行为"。
 

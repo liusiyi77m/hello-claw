@@ -83,7 +83,7 @@ OpenClaw 是一个开源的自主式 AI Agent 执行引擎，由开发者 Peter 
 
 13 家国内大厂跟进 OpenClaw 全景图：
 
-![国内大厂 OpenClaw 生态全景](/openclaw-landscape.jpg)
+![国内大厂 OpenClaw 生态全景](./images/openclaw-landscape.jpg)
 <small>图片来源：[TheBlockBeats](https://www.theblockbeats.info)</small>
 
 <details>
@@ -149,7 +149,7 @@ OpenClaw 的架构分为四层：
 
 领养一只龙虾，本质上和雇一个员工一样——准备四样东西就行：
 
-![养一只龙虾需要做的4件事情](/龙虾套装.png)
+![养一只龙虾需要做的4件事情](./images/龙虾套装.png)
 
 | 步骤 | 类比 | 你要做的 | 对应章节 |
 |------|------|---------|---------|

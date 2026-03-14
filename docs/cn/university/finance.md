@@ -471,7 +471,7 @@ https://finance.yahoo.com/news/apple-aapl-earnings-20260401.html
 
 ---
 
-**下一步**：[🧪 龙虾大学：Vibe Coding 实战](/cn/university/vibe-coding)
+**下一步**：[🧪 龙虾大学：Vibe Coding 实战](/cn/university/vibe-coding/)
 
 ---
 
